@@ -8,10 +8,10 @@ import org.junit.jupiter.api.Test;
 import static io.restassured.RestAssured.*;
 import static org.hamcrest.Matchers.equalTo;
 
+@DisplayName("Testes que validam a classe de Login")
 public class UsuarioTest {
 
     Response response;
-
 
     @Test
     @DisplayName("Exibir lista de usuários cadastrados")
@@ -152,5 +152,28 @@ public class UsuarioTest {
         System.out.println(response.asString());
     }
 
+    @Test
+    @DisplayName("Validar que não permite chamada da requisição para fazer Login com método GET")
+    public void testValidarQueNaoPermiteChamarRequisicaoDeLoginComMetodoPost() {
+
+        baseURI = "http://localhost";
+        port = 3000;
+
+        this.response = given().
+                contentType(ContentType.JSON)
+                .body("{\n" +
+                        "  \"email\": \"fulano@qa.com\",\n" +
+                        "  \"password\": \"teste\"\n" +
+                        "}")
+                .when()
+                .get("/login")
+                .then()
+                .assertThat()
+                .body("message", equalTo("Não é possível realizar GET em /login. Acesse http://localhost:3000 para ver as rotas disponíveis e como utilizá-las."))
+                .statusCode(405)
+                .extract().response();
+
+        System.out.println(response.asString());
+    }
 
 }
