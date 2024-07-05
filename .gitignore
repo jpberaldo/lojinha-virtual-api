@@ -39,4 +39,5 @@ build/
 
 ### My Desk ###
 .idea
+.idea/
 utils.txt
