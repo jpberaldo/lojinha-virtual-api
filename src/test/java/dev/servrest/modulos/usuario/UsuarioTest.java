@@ -176,4 +176,29 @@ public class UsuarioTest {
         System.out.println(response.asString());
     }
 
+    @Test
+    @DisplayName("Validar que não permite fazer cadastro com um usuário já cadastrado no sistema")
+    public void testValidarQueCadastrarUsuarioComDadosJaUtilizados() {
+
+        baseURI = "http://localhost";
+        port = 3000;
+
+        this.response = given().
+                contentType(ContentType.JSON)
+                .body("{\n" +
+                        "  \"nome\": \"Fulano da Silva\",\n" +
+                        "  \"email\": \"beltrano@qa.com.br\",\n" +
+                        "  \"password\": \"teste\",\n" +
+                        "  \"administrador\": \"true\"\n" +
+                        "}")
+                .when()
+                .post("/usuarios")
+                .then()
+                .assertThat()
+                .body("message", equalTo("Este email já está sendo usado"))
+                .extract().response();
+
+        System.out.println(response.asString());
+    }
+
 }
