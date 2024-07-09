@@ -111,4 +111,45 @@ public class ProdutoTest {
 
     }
 
+    @Test
+    @DisplayName("Não permite cadastrar produto sem enviar o token corretamente na requisição")
+    public void testNaoPermiteCadastrarProdutoSemTokenCorreto() {
+
+        baseURI = "http://localhost";
+        port = 3000;
+
+        String token = given().
+                contentType(ContentType.JSON)
+                .body("{\n" +
+                        "  \"email\": \"fulano@qa.com\",\n" +
+                        "  \"password\": \"teste\"\n" +
+                        "}")
+                .when()
+                .post("/login")
+                .then()
+                .extract().path("authorization");
+
+        System.out.println(token);
+
+        Response response = given()
+                .contentType(ContentType.JSON)
+                .header("authorizatio", token)
+                .body("{\n" +
+                        "  \"nome\": \"Logitech GPRO Pink\",\n" +
+                        "  \"preco\": 600,\n" +
+                        "  \"descricao\": \"Mouse\",\n" +
+                        "  \"quantidade\": 80\n" +
+                        "}")
+                .when()
+                .post("/produtos")
+                .then()
+                .assertThat()
+                .body("message", equalTo("Token de acesso ausente, inválido, expirado ou usuário do token não existe mais"))
+                .statusCode(401)
+                .extract().response();
+
+        System.out.println(response);
+
+    }
+
 }
