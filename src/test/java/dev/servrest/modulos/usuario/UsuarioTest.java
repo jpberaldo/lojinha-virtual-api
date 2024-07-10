@@ -41,7 +41,7 @@ public class UsuarioTest {
         this.response = given().
                 contentType(ContentType.JSON)
                 .body("{\n" +
-                        "  \"email\": \"fulano@qa.com\",\n" +
+                        "  \"email\": \"testesnovo@qa.com.br\",\n" +
                         "  \"password\": \"teste\"\n" +
                         "}")
                 .when()
