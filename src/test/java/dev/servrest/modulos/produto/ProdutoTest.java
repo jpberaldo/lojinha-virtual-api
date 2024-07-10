@@ -54,10 +54,10 @@ public class ProdutoTest {
                 .contentType(ContentType.JSON)
                 .header("authorization", token)
                 .body("{\n" +
-                        "  \"nome\": \"Logitech GPRO Yellow\",\n" +
-                        "  \"preco\": 150,\n" +
+                        "  \"nome\": \"Logitech GPRO Purple\",\n" +
+                        "  \"preco\": 210,\n" +
                         "  \"descricao\": \"Mouse\",\n" +
-                        "  \"quantidade\": 10\n" +
+                        "  \"quantidade\": 5\n" +
                         "}")
                 .when()
                 .post("/produtos")
@@ -185,6 +185,47 @@ public class ProdutoTest {
                 .assertThat()
                 .body("message", equalTo("Token de acesso ausente, inválido, expirado ou usuário do token não existe mais"))
                 .statusCode(401)
+                .extract().response();
+
+        System.out.println(response.asString());
+
+    }
+
+    @Test
+    @DisplayName("Não permite cadastrar produto com usuário administrador = false")
+    public void testNaoPermiteCadastrarProdutoComADMIgualFalse() {
+
+        baseURI = "http://localhost";
+        port = 3000;
+
+        String token = given().
+                contentType(ContentType.JSON)
+                .body("{\n" +
+                        "  \"email\": \"testesnovo@qa.com.br\",\n" +
+                        "  \"password\": \"teste\"\n" +
+                        "}")
+                .when()
+                .post("/login")
+                .then()
+                .extract().path("authorization");
+
+        System.out.println(token);
+
+        Response response = given()
+                .contentType(ContentType.JSON)
+                .header("authorization", token)
+                .body("{\n" +
+                        "  \"nome\": \"Logitech GPRO Yellow\",\n" +
+                        "  \"preco\": 150,\n" +
+                        "  \"descricao\": \"Mouse\",\n" +
+                        "  \"quantidade\": 10\n" +
+                        "}")
+                .when()
+                .post("/produtos")
+                .then()
+                .assertThat()
+                .body("message", equalTo("Rota exclusiva para administradores"))
+                .statusCode(403)
                 .extract().response();
 
         System.out.println(response.asString());
