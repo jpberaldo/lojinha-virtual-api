@@ -239,17 +239,6 @@ public class ProdutoTest {
         baseURI = "http://localhost";
         port = 3000;
 
-        String token = given().
-                contentType(ContentType.JSON)
-                .body("{\n" +
-                        "  \"email\": \"beltrano@qa.com.br\",\n" +
-                        "  \"password\": \"teste\"\n" +
-                        "}")
-                .when()
-                .post("/login")
-                .then()
-                .extract().path("authorization");
-
         String tempToken = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3Rlc25vdm9AcWEuY29tLmJyIiwicGFzc3dvcmQiOiJ0ZXN0ZSIsImlhdCI6MTcyMDcyODI4MywiZXhwIjoxNzIwNzI4ODgzfQ.waV6O_a2cj18XZTPyzs5SsZclQ8QvQVYyYjvsgFg1TA";
 
         Response response = given()
