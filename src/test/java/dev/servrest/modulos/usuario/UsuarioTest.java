@@ -201,4 +201,22 @@ public class UsuarioTest {
         System.out.println(response.asString());
     }
 
+    @Test
+    @DisplayName("Excluir um usuário existente")
+    public void testExcluirUmUsuarioExistente() {
+
+        baseURI = "http://localhost";
+        port = 3000;
+
+        given()
+                .pathParam("_id", "1boS3Vbhu42nx3vW")
+                .when().delete("/usuarios/{_id}")
+                .then()
+                .assertThat()
+                .statusCode(200)
+                .body("message", equalTo("Registro excluído com sucesso"))
+                .log().all();
+
+    }
+
 }

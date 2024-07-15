@@ -11,8 +11,8 @@ public class CarrinhoTest {
     Response response;
 
     @Test
-    @DisplayName("Exibir lista de produtos cadastrados")
-    public void testExibirListaDeUsuariosCadastrados() {
+    @DisplayName("Exibir lista de produtos no carrinho")
+    public void testExibirListaDeProdutosNoCarrinho() {
 
         baseURI = "http://localhost";
         port = 3000;
