@@ -2,6 +2,7 @@ package dev.servrest.modulos.usuario;
 
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
+import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -210,11 +211,32 @@ public class UsuarioTest {
 
         given()
                 .pathParam("_id", "1boS3Vbhu42nx3vW")
-                .when().delete("/usuarios/{_id}")
+                .when()
+                .delete("/usuarios/{_id}")
                 .then()
                 .assertThat()
                 .statusCode(200)
                 .body("message", equalTo("Registro excluído com sucesso"))
+                .log().all();
+
+    }
+
+    @Test
+    @DisplayName("Não permite excluir usuário com item no carrinho")
+    public void testNaoPermitirExcluirUsuarioComItemNoCarrinho() {
+
+        baseURI = "http://localhost";
+        port = 3000;
+
+        given()
+                .pathParam("_id", "0uxuPY0cbmQhpEz1")
+                .when()
+                .delete("/usuarios/{_id}")
+                .then()
+                .assertThat()
+                .statusCode(HttpStatus.SC_BAD_REQUEST)
+                .statusCode(400)
+                .body("message", equalTo("Não é permitido excluir usuário com carrinho cadastrado"))
                 .log().all();
 
     }
