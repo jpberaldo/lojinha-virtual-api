@@ -273,7 +273,7 @@ public class ProdutoTest {
         given()
                 .pathParam("_id", "8fp9Pmu2hUMnLylM")
                 .when()
-                .delete("/usuarios/{_id}")
+                .delete("/produtos/{_id}")
                 .then()
                 .assertThat()
                 .statusCode(HttpStatus.SC_OK)
