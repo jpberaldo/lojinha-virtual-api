@@ -2,6 +2,7 @@ package dev.servrest.modulos.produto;
 
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
+import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -261,5 +262,27 @@ public class ProdutoTest {
         System.out.println(response.asString());
 
     }
+
+    @Test
+    @DisplayName("Excluir um produto valido")
+    public void testExcluirUmProdutoValido() {
+
+        baseURI = "http://localhost";
+        port = 3000;
+
+        given()
+                .pathParam("_id", "8fp9Pmu2hUMnLylM")
+                .when()
+                .delete("/usuarios/{_id}")
+                .then()
+                .assertThat()
+                .statusCode(HttpStatus.SC_OK)
+                .statusCode(200)
+                .body("message", equalTo("Registro excluído com sucesso"))
+                .log().all();
+
+    }
+
+
 
 }
