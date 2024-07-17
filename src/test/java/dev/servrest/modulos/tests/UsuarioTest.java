@@ -1,4 +1,4 @@
-package dev.servrest.modulos.usuario;
+package dev.servrest.modulos.tests;
 
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
@@ -238,6 +238,45 @@ public class UsuarioTest {
                 .statusCode(400)
                 .body("message", equalTo("Não é permitido excluir usuário com carrinho cadastrado"))
                 .log().all();
+
+    }
+
+    @Test
+    @DisplayName("Buscar usuário cadastrado por nome")
+    public void testBuscarUsuarioFiltrandoPorNome() {
+
+        baseURI = "http://localhost";
+        port = 3000;
+
+        this.response = given()
+                .param("nome", "Fulano")
+                .when()
+                .get("/usuarios")
+                .then()
+                .statusCode(200)
+                .extract().response();
+
+        System.out.println(response.asString());
+
+    }
+
+    @Test
+    @DisplayName("Buscar usuário cadastrado por nome não encontrado")
+    public void testBuscarUsuarioFiltrandoPorNomeNaoEncontrado() {
+
+        baseURI = "http://localhost";
+        port = 3000;
+
+        this.response = given()
+                .param("nome", "Teste")
+                .when()
+                .get("/usuarios")
+                .then()
+                .statusCode(200)
+                .body("quantidade", equalTo(0))
+                .extract().response();
+
+        System.out.println(response.asString());
 
     }
 

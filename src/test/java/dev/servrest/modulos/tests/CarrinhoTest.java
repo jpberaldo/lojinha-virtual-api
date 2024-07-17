@@ -1,4 +1,4 @@
-package dev.servrest.modulos.carrinho;
+package dev.servrest.modulos.tests;
 
 import io.restassured.response.Response;
 import org.junit.jupiter.api.DisplayName;

@@ -1,4 +1,4 @@
-package dev.servrest.modulos.produto;
+package dev.servrest.modulos.tests;
 
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
