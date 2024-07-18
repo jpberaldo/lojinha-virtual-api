@@ -1,9 +1,10 @@
 package dev.servrest.modulos.tests;
 
+import dev.servrest.modulos.utils.Service;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import org.apache.http.HttpStatus;
-import org.hamcrest.Matchers;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -16,12 +17,16 @@ public class UsuarioTest {
 
     Response response;
 
+    @BeforeEach
+    public void beforeEach() {
+
+        Service.configurarRequisicaoChamada();
+
+    }
+
     @Test
     @DisplayName("Exibir lista de usuários cadastrados")
     public void testExibirListaDeUsuariosCadastrados() {
-
-        baseURI = "http://localhost";
-        port = 3000;
 
         this.response = given().
                 when().
@@ -37,9 +42,6 @@ public class UsuarioTest {
     @Test
     @DisplayName("Validar Login com usuário válido")
     public void testRealizarLoginComDadosValidos() {
-
-        baseURI = "http://localhost";
-        port = 3000;
 
         this.response = given().
                 contentType(ContentType.JSON)
@@ -63,9 +65,6 @@ public class UsuarioTest {
     @DisplayName("Validar Login com email inválido")
     public void testRealizarLoginComEmailInvalido() {
 
-        baseURI = "http://localhost";
-        port = 3000;
-
         this.response = given().
                 contentType(ContentType.JSON)
                 .body("{\n" +
@@ -86,9 +85,6 @@ public class UsuarioTest {
     @Test
     @DisplayName("Validar Login com senha em branco")
     public void testRealizarLoginComSenhaEmBranco() {
-
-        baseURI = "http://localhost";
-        port = 3000;
 
         this.response = given().
                 contentType(ContentType.JSON)
@@ -111,9 +107,6 @@ public class UsuarioTest {
     @DisplayName("Validar Login com email em branco")
     public void testRealizarLoginComEmailEmBranco() {
 
-        baseURI = "http://localhost";
-        port = 3000;
-
         this.response = given().
                 contentType(ContentType.JSON)
                 .body("{\n" +
@@ -134,9 +127,6 @@ public class UsuarioTest {
     @Test
     @DisplayName("Validar Login com senha incorreta")
     public void testRealizarLoginComSenhaIncorreta() {
-
-        baseURI = "http://localhost";
-        port = 3000;
 
         this.response = given().
                 contentType(ContentType.JSON)
@@ -159,9 +149,6 @@ public class UsuarioTest {
     @DisplayName("Validar que não permite chamada da requisição para fazer Login com método GET")
     public void testValidarQueNaoPermiteChamarRequisicaoDeLoginComMetodoPost() {
 
-        baseURI = "http://localhost";
-        port = 3000;
-
         this.response = given().
                 contentType(ContentType.JSON)
                 .body("{\n" +
@@ -182,9 +169,6 @@ public class UsuarioTest {
     @Test
     @DisplayName("Validar que não permite fazer cadastro com um usuário já cadastrado no sistema")
     public void testValidarQueCadastrarUsuarioComDadosJaUtilizados() {
-
-        baseURI = "http://localhost";
-        port = 3000;
 
         this.response = given().
                 contentType(ContentType.JSON)
@@ -208,9 +192,6 @@ public class UsuarioTest {
     @DisplayName("Excluir um usuário existente")
     public void testExcluirUmUsuarioExistente() {
 
-        baseURI = "http://localhost";
-        port = 3000;
-
         given()
                 .pathParam("_id", "1boS3Vbhu42nx3vW")
                 .when()
@@ -226,9 +207,6 @@ public class UsuarioTest {
     @Test
     @DisplayName("Não permite excluir usuário com item no carrinho")
     public void testNaoPermitirExcluirUsuarioComItemNoCarrinho() {
-
-        baseURI = "http://localhost";
-        port = 3000;
 
         given()
                 .pathParam("_id", "0uxuPY0cbmQhpEz1")
@@ -247,9 +225,6 @@ public class UsuarioTest {
     @DisplayName("Buscar usuário cadastrado por nome")
     public void testBuscarUsuarioFiltrandoPorNome() {
 
-        baseURI = "http://localhost";
-        port = 3000;
-
         this.response = given()
                 .param("nome", "Fulano")
                 .when()
@@ -265,9 +240,6 @@ public class UsuarioTest {
     @Test
     @DisplayName("Buscar usuário cadastrado por email")
     public void testBuscarUsuarioFiltrandoPorEmail() {
-
-        baseURI = "http://localhost";
-        port = 3000;
 
         this.response = given()
                 .param("email", "fulano@qa.com")
@@ -285,9 +257,6 @@ public class UsuarioTest {
     @DisplayName("Buscar usuário cadastrado por senha")
     public void testBuscarUsuarioFiltrandoPorSenha() {
 
-        baseURI = "http://localhost";
-        port = 3000;
-
         this.response = given()
                 .param("password", "teste")
                 .when()
@@ -304,16 +273,13 @@ public class UsuarioTest {
     @DisplayName("Verificar e listar se usuário for administrador")
     public void testVerificarEListarSeUsuarioEAdministrador() {
 
-        baseURI = "http://localhost";
-        port = 3000;
-
         this.response = given()
                 .param("administrador", "false")
                 .when()
                 .get("/usuarios")
                 .then()
                 .statusCode(200)
-                .body("usuarios.nome", Matchers.hasItem("Beltrano da Silva"))
+                .body("usuarios.nome", hasItem("Beltrano da Silva"))
                 .extract().response();
 
         System.out.println(response.asString());
@@ -323,9 +289,6 @@ public class UsuarioTest {
     @Test
     @DisplayName("Buscar usuário cadastrado por nome não encontrado")
     public void testBuscarUsuarioFiltrandoPorNomeNaoEncontrado() {
-
-        baseURI = "http://localhost";
-        port = 3000;
 
         this.response = given()
                 .param("nome", "Teste")
