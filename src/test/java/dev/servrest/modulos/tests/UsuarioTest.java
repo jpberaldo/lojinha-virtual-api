@@ -3,11 +3,13 @@ package dev.servrest.modulos.tests;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import org.apache.http.HttpStatus;
+import org.hamcrest.Matchers;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static io.restassured.RestAssured.*;
 import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.hasItem;
 
 @DisplayName("Testes que validam a classe de Login")
 public class UsuarioTest {
@@ -254,6 +256,64 @@ public class UsuarioTest {
                 .get("/usuarios")
                 .then()
                 .statusCode(200)
+                .extract().response();
+
+        System.out.println(response.asString());
+
+    }
+
+    @Test
+    @DisplayName("Buscar usuário cadastrado por email")
+    public void testBuscarUsuarioFiltrandoPorEmail() {
+
+        baseURI = "http://localhost";
+        port = 3000;
+
+        this.response = given()
+                .param("email", "fulano@qa.com")
+                .when()
+                .get("/usuarios")
+                .then()
+                .statusCode(200)
+                .extract().response();
+
+        System.out.println(response.asString());
+
+    }
+
+    @Test
+    @DisplayName("Buscar usuário cadastrado por senha")
+    public void testBuscarUsuarioFiltrandoPorSenha() {
+
+        baseURI = "http://localhost";
+        port = 3000;
+
+        this.response = given()
+                .param("password", "teste")
+                .when()
+                .get("/usuarios")
+                .then()
+                .statusCode(200)
+                .extract().response();
+
+        System.out.println(response.asString());
+
+    }
+
+    @Test
+    @DisplayName("Verificar e listar se usuário for administrador")
+    public void testVerificarEListarSeUsuarioEAdministrador() {
+
+        baseURI = "http://localhost";
+        port = 3000;
+
+        this.response = given()
+                .param("administrador", "false")
+                .when()
+                .get("/usuarios")
+                .then()
+                .statusCode(200)
+                .body("usuarios.nome", Matchers.hasItem("Beltrano da Silva"))
                 .extract().response();
 
         System.out.println(response.asString());
