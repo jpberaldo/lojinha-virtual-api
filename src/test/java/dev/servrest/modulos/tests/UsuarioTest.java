@@ -8,6 +8,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import static io.restassured.RestAssured.*;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasItem;
@@ -280,6 +283,28 @@ public class UsuarioTest {
                 .then()
                 .statusCode(200)
                 .body("usuarios.nome", hasItem("Beltrano da Silva"))
+                .extract().response();
+
+        System.out.println(response.asString());
+
+    }
+
+    @Test
+    @DisplayName("Fazer busca de usuario por 2 ou mais filtros")
+    public void testBuscarUsuarioPorDoisOuMaisFiltros() {
+
+        Map<String, String> parametros = new HashMap<>();
+        parametros.put("nome", "Fulano");
+        parametros.put("email", "fulano@qa.com");
+
+        this.response = given()
+                .params(parametros)
+                .when()
+                .get("/usuarios")
+                .then()
+                .statusCode(200)
+                .body("usuarios.nome", hasItem("Fulano da Silva"))
+                .body("usuarios.email", hasItem("fulano@qa.com"))
                 .extract().response();
 
         System.out.println(response.asString());
