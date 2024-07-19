@@ -1,6 +1,8 @@
 package dev.servrest.modulos.tests;
 
+import dev.servrest.modulos.utils.Service;
 import io.restassured.response.Response;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -10,12 +12,14 @@ public class CarrinhoTest {
 
     Response response;
 
+    @BeforeEach
+    public void beforeEach() {
+        Service.configurarRequisicaoChamada();
+    }
+
     @Test
     @DisplayName("Exibir lista de produtos no carrinho")
     public void testExibirListaDeProdutosNoCarrinho() {
-
-        baseURI = "http://localhost";
-        port = 3000;
 
         this.response = given().
                 when().

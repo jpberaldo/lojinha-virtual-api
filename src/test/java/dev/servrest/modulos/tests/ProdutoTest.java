@@ -1,8 +1,10 @@
 package dev.servrest.modulos.tests;
 
+import dev.servrest.modulos.utils.Service;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import org.apache.http.HttpStatus;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -13,12 +15,14 @@ public class ProdutoTest {
 
     Response response;
 
+    @BeforeEach
+    public void beforeEach() {
+        Service.configurarRequisicaoChamada();
+    }
+
     @Test
     @DisplayName("Exibir lista de produtos cadastrados")
     public void testExibirListaDeUsuariosCadastrados() {
-
-        baseURI = "http://localhost";
-        port = 3000;
 
         this.response = given().
                 when().
@@ -34,9 +38,6 @@ public class ProdutoTest {
     @Test
     @DisplayName("Cadastrar novo produto válido")
     public void testCadastrarNovoProdutoValido() {
-
-        baseURI = "http://localhost";
-        port = 3000;
 
         String token = given().
                 contentType(ContentType.JSON)
@@ -74,9 +75,6 @@ public class ProdutoTest {
     @Test
     @DisplayName("Não permite cadastrar produto ja registrado no sistema")
     public void testNaoPermiteCadastrarProdutoJaRegistrado() {
-
-        baseURI = "http://localhost";
-        port = 3000;
 
         String token = given().
                 contentType(ContentType.JSON)
@@ -116,9 +114,6 @@ public class ProdutoTest {
     @DisplayName("Não permite cadastrar produto sem enviar o parametro do token corretamente na requisição")
     public void testNaoPermiteCadastrarProdutoSemOParametroTokenCorreto() {
 
-        baseURI = "http://localhost";
-        port = 3000;
-
         String token = given().
                 contentType(ContentType.JSON)
                 .body("{\n" +
@@ -157,9 +152,6 @@ public class ProdutoTest {
     @DisplayName("Não permite cadastrar produto com token inválido")
     public void testNaoPermiteCadastrarProdutoComTokenInvalido() {
 
-        baseURI = "http://localhost";
-        port = 3000;
-
         String token = given().
                 contentType(ContentType.JSON)
                 .body("{\n" +
@@ -195,9 +187,6 @@ public class ProdutoTest {
     @Test
     @DisplayName("Não permite cadastrar produto com usuário administrador = false")
     public void testNaoPermiteCadastrarProdutoComADMIgualFalse() {
-
-        baseURI = "http://localhost";
-        port = 3000;
 
         String token = given().
                 contentType(ContentType.JSON)
@@ -237,9 +226,6 @@ public class ProdutoTest {
     @DisplayName("Não permitir cadastrar produto com usuário inválido")
     public void testNaoPermiteCadastrarProdutoComUsuarioInvalido() {
 
-        baseURI = "http://localhost";
-        port = 3000;
-
         String tempToken = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3Rlc25vdm9AcWEuY29tLmJyIiwicGFzc3dvcmQiOiJ0ZXN0ZSIsImlhdCI6MTcyMDcyODI4MywiZXhwIjoxNzIwNzI4ODgzfQ.waV6O_a2cj18XZTPyzs5SsZclQ8QvQVYyYjvsgFg1TA";
 
         Response response = given()
@@ -267,9 +253,6 @@ public class ProdutoTest {
     @DisplayName("Excluir um produto valido")
     public void testExcluirUmProdutoValido() {
 
-        baseURI = "http://localhost";
-        port = 3000;
-
         given()
                 .pathParam("_id", "8fp9Pmu2hUMnLylM")
                 .when()
@@ -282,7 +265,6 @@ public class ProdutoTest {
                 .log().all();
 
     }
-
 
 
 }
