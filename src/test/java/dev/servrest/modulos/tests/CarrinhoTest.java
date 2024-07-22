@@ -32,4 +32,36 @@ public class CarrinhoTest {
 
     }
 
+    @Test
+    @DisplayName("Buscar carrinho por ID")
+    public void testBuscarCarrinhoPorId() {
+
+        this.response = given()
+                .pathParam("_id", "qbMqntef4iTOwWfg")
+                .when()
+                .get("/carrinhos/{_id}")
+                .then()
+                .statusCode(200)
+                .extract().response();
+
+        System.out.println(response.asString());
+
+    }
+
+    @Test
+    @DisplayName("Buscar carrinho por ID inválido")
+    public void testBuscarCarrinhoPorIdInvalido() {
+
+        this.response = given()
+                .pathParam("_id", "BeeJh5lz3k6kSIzA")
+                .when()
+                .get("/carrinhos/{_id}")
+                .then()
+                .statusCode(400)
+                .extract().response();
+
+        System.out.println(response.asString());
+
+    }
+
 }
