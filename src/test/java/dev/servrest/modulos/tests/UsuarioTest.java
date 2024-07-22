@@ -1,5 +1,6 @@
 package dev.servrest.modulos.tests;
 
+import dev.servrest.modulos.pojo.UsuarioPojo;
 import dev.servrest.modulos.utils.Service;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
@@ -46,12 +47,13 @@ public class UsuarioTest {
     @DisplayName("Validar Login com usuário válido")
     public void testRealizarLoginComDadosValidos() {
 
+        UsuarioPojo usuario = new UsuarioPojo();
+        usuario.setEmail("testesnovo@qa.com.br");
+        usuario.setPassword("teste");
+
         this.response = given().
                 contentType(ContentType.JSON)
-                .body("{\n" +
-                        "  \"email\": \"testesnovo@qa.com.br\",\n" +
-                        "  \"password\": \"teste\"\n" +
-                        "}")
+                .body(usuario)
                 .when()
                 .post("/login")
                 .then()
