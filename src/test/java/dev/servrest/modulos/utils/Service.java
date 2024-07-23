@@ -6,7 +6,7 @@ import static io.restassured.RestAssured.port;
 public class Service {
 
 
-    public static void configurarRequisicaoChamada() {
+    public static void configurarEnderecoDaRequisicaoChamada() {
 
         baseURI = "http://localhost";
         port = 3000;

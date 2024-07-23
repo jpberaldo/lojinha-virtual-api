@@ -5,21 +5,12 @@ import dev.servrest.modulos.pojo.UsuarioPojo;
 public class UsuarioData {
 
 
-    public static UsuarioPojo realizarLoginComUsuarioValido() {
-
+    public static UsuarioPojo realizarLoginComUsuario(String email, String password) {
         UsuarioPojo usuario = new UsuarioPojo();
-        usuario.setEmail("testesnovo@qa.com.br");
-        usuario.setPassword("teste");
+        usuario.setEmail(email);
+        usuario.setPassword(password);
         return usuario;
 
     }
 
-    public static UsuarioPojo realizarLoginComEmailInvalido() {
-
-        UsuarioPojo usuario = new UsuarioPojo();
-        usuario.setEmail("testesnovo");
-        usuario.setPassword("teste");
-        return usuario;
-
-    }
 }

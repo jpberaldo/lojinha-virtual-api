@@ -14,7 +14,7 @@ public class CarrinhoTest {
 
     @BeforeEach
     public void beforeEach() {
-        Service.configurarRequisicaoChamada();
+        Service.configurarEnderecoDaRequisicaoChamada();
     }
 
     @Test

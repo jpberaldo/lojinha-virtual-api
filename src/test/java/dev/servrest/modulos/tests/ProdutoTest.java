@@ -17,7 +17,7 @@ public class ProdutoTest {
 
     @BeforeEach
     public void beforeEach() {
-        Service.configurarRequisicaoChamada();
+        Service.configurarEnderecoDaRequisicaoChamada();
     }
 
     @Test

@@ -1,7 +1,6 @@
 package dev.servrest.modulos.tests;
 
 import dev.servrest.modulos.data.UsuarioData;
-import dev.servrest.modulos.pojo.UsuarioPojo;
 import dev.servrest.modulos.utils.Service;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
@@ -24,9 +23,7 @@ public class UsuarioTest {
 
     @BeforeEach
     public void beforeEach() {
-
-        Service.configurarRequisicaoChamada();
-
+        Service.configurarEnderecoDaRequisicaoChamada();
     }
 
     @Test
@@ -37,6 +34,7 @@ public class UsuarioTest {
                 when().
                 get("/usuarios")
                 .then()
+                .assertThat()
                 .statusCode(200)
                 .extract().response();
 
@@ -48,10 +46,9 @@ public class UsuarioTest {
     @DisplayName("Validar Login com usuário válido")
     public void testRealizarLoginComDadosValidos() {
 
-
         this.response = given().
                 contentType(ContentType.JSON)
-                .body(UsuarioData.realizarLoginComUsuarioValido())
+                .body(UsuarioData.realizarLoginComUsuario("testesnovo@qa.com.br", "teste"))
                 .when()
                 .post("/login")
                 .then()
@@ -70,7 +67,7 @@ public class UsuarioTest {
 
         this.response = given().
                 contentType(ContentType.JSON)
-                .body(UsuarioData.realizarLoginComEmailInvalido())
+                .body(UsuarioData.realizarLoginComUsuario("testesnovo", "teste"))
                 .when()
                 .post("/login")
                 .then()
@@ -88,10 +85,7 @@ public class UsuarioTest {
 
         this.response = given().
                 contentType(ContentType.JSON)
-                .body("{\n" +
-                        "  \"email\": \"fulano@qa.com\",\n" +
-                        "  \"password\": \"\"\n" +
-                        "}")
+                .body(UsuarioData.realizarLoginComUsuario("testesnovo@qa.com.br", ""))
                 .when()
                 .post("/login")
                 .then()
@@ -109,10 +103,7 @@ public class UsuarioTest {
 
         this.response = given().
                 contentType(ContentType.JSON)
-                .body("{\n" +
-                        "  \"email\": \"\",\n" +
-                        "  \"password\": \"teste\"\n" +
-                        "}")
+                .body(UsuarioData.realizarLoginComUsuario("", "teste"))
                 .when()
                 .post("/login")
                 .then()
