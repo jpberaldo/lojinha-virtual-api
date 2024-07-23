@@ -1,5 +1,6 @@
 package dev.servrest.modulos.tests;
 
+import dev.servrest.modulos.data.ProdutoData;
 import dev.servrest.modulos.utils.Service;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
@@ -55,12 +56,7 @@ public class ProdutoTest {
         Response response = given()
                 .contentType(ContentType.JSON)
                 .header("authorization", token)
-                .body("{\n" +
-                        "  \"nome\": \"Logitech GPRO Purple\",\n" +
-                        "  \"preco\": 210,\n" +
-                        "  \"descricao\": \"Mouse\",\n" +
-                        "  \"quantidade\": 5\n" +
-                        "}")
+                .body(ProdutoData.cadastrarProduto("TV", "Para assistir filmes e séries", 1000, 200))
                 .when()
                 .post("/produtos")
                 .then()
@@ -68,7 +64,7 @@ public class ProdutoTest {
                 .body("message", equalTo("Cadastro realizado com sucesso"))
                 .extract().response();
 
-        System.out.println(response);
+        System.out.println(response.asString());
 
     }
 
