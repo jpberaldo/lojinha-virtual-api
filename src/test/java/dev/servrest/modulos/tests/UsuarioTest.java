@@ -5,9 +5,7 @@ import dev.servrest.modulos.utils.Service;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import org.apache.http.HttpStatus;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -16,6 +14,7 @@ import static io.restassured.RestAssured.*;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasItem;
 
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @DisplayName("Testes que validam a classe de Login")
 public class UsuarioTest {
 
@@ -27,6 +26,7 @@ public class UsuarioTest {
     }
 
     @Test
+    @Order(1)
     @DisplayName("Exibir lista de usuários cadastrados")
     public void testExibirListaDeUsuariosCadastrados() {
 
@@ -43,6 +43,7 @@ public class UsuarioTest {
     }
 
     @Test
+    @Order(2)
     @DisplayName("Validar Login com usuário válido")
     public void testRealizarLoginComDadosValidos() {
 
@@ -62,6 +63,7 @@ public class UsuarioTest {
     }
 
     @Test
+    @Order(3)
     @DisplayName("Validar Login com email inválido")
     public void testRealizarLoginComEmailInvalido() {
 
@@ -80,6 +82,7 @@ public class UsuarioTest {
     }
 
     @Test
+    @Order(4)
     @DisplayName("Validar Login com senha em branco")
     public void testRealizarLoginComSenhaEmBranco() {
 
@@ -98,6 +101,7 @@ public class UsuarioTest {
     }
 
     @Test
+    @Order(5)
     @DisplayName("Validar Login com email em branco")
     public void testRealizarLoginComEmailEmBranco() {
 
@@ -116,6 +120,7 @@ public class UsuarioTest {
     }
 
     @Test
+    @Order(6)
     @DisplayName("Validar Login com senha incorreta")
     public void testRealizarLoginComSenhaIncorreta() {
 
@@ -134,6 +139,7 @@ public class UsuarioTest {
     }
 
     @Test
+    @Order(7)
     @DisplayName("Validar que não permite chamada da requisição para fazer Login com método GET")
     public void testValidarQueNaoPermiteChamarRequisicaoDeLoginComMetodoPost() {
 
@@ -153,6 +159,7 @@ public class UsuarioTest {
 
 
     @Test
+    @Order(8)
     @DisplayName("Excluir um usuário existente")
     public void testExcluirUmUsuarioExistente() {
 
@@ -169,6 +176,7 @@ public class UsuarioTest {
     }
 
     @Test
+    @Order(9)
     @DisplayName("Não permite excluir usuário com item no carrinho")
     public void testNaoPermitirExcluirUsuarioComItemNoCarrinho() {
 
@@ -186,6 +194,7 @@ public class UsuarioTest {
     }
 
     @Test
+    @Order(10)
     @DisplayName("Buscar usuário cadastrado por nome")
     public void testBuscarUsuarioFiltrandoPorNome() {
 
@@ -202,6 +211,7 @@ public class UsuarioTest {
     }
 
     @Test
+    @Order(11)
     @DisplayName("Buscar usuário cadastrado por email")
     public void testBuscarUsuarioFiltrandoPorEmail() {
 
@@ -218,6 +228,7 @@ public class UsuarioTest {
     }
 
     @Test
+    @Order(12)
     @DisplayName("Buscar usuário cadastrado por senha")
     public void testBuscarUsuarioFiltrandoPorSenha() {
 
@@ -234,6 +245,7 @@ public class UsuarioTest {
     }
 
     @Test
+    @Order(13)
     @DisplayName("Verificar e listar se usuário for administrador")
     public void testVerificarEListarSeUsuarioEAdministrador() {
 
@@ -251,6 +263,7 @@ public class UsuarioTest {
     }
 
     @Test
+    @Order(14)
     @DisplayName("Fazer busca de usuario por 2 ou mais filtros")
     public void testBuscarUsuarioPorDoisOuMaisFiltros() {
 
@@ -273,6 +286,7 @@ public class UsuarioTest {
     }
 
     @Test
+    @Order(15)
     @DisplayName("Buscar usuário cadastrado por nome não encontrado")
     public void testBuscarUsuarioFiltrandoPorNomeNaoEncontrado() {
 
