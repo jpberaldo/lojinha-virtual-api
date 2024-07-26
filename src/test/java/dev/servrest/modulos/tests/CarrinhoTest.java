@@ -2,12 +2,11 @@ package dev.servrest.modulos.tests;
 
 import dev.servrest.modulos.utils.Service;
 import io.restassured.response.Response;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 import static io.restassured.RestAssured.*;
 
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class CarrinhoTest {
 
     Response response;
@@ -18,6 +17,7 @@ public class CarrinhoTest {
     }
 
     @Test
+    @Order(1)
     @DisplayName("Exibir lista de produtos no carrinho")
     public void testExibirListaDeProdutosNoCarrinho() {
 
@@ -33,6 +33,7 @@ public class CarrinhoTest {
     }
 
     @Test
+    @Order(2)
     @DisplayName("Buscar carrinho por ID")
     public void testBuscarCarrinhoPorId() {
 
@@ -49,6 +50,7 @@ public class CarrinhoTest {
     }
 
     @Test
+    @Order(3)
     @DisplayName("Buscar carrinho por ID inválido")
     public void testBuscarCarrinhoPorIdInvalido() {
 
