@@ -49,7 +49,7 @@ public class UsuarioTest {
 
         this.response = given().
                 contentType(ContentType.JSON)
-                .body(UsuarioData.realizarLoginComUsuario("testesnovo@qa.com.br", "teste"))
+                .body(UsuarioData.realizarLoginComUsuario("fulano@qa.com", "teste"))
                 .when()
                 .post("/login")
                 .then()
