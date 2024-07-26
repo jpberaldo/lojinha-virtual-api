@@ -5,13 +5,13 @@ import dev.servrest.modulos.utils.Service;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import org.apache.http.HttpStatus;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 import static io.restassured.RestAssured.*;
 import static org.hamcrest.Matchers.equalTo;
 
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
+@DisplayName("Testes que validam a classe de Produto")
 public class ProdutoTest {
 
     Response response;
@@ -22,6 +22,7 @@ public class ProdutoTest {
     }
 
     @Test
+    @Order(1)
     @DisplayName("Exibir lista de produtos cadastrados")
     public void testExibirListaDeUsuariosCadastrados() {
 
@@ -37,6 +38,7 @@ public class ProdutoTest {
     }
 
     @Test
+    @Order(2)
     @DisplayName("Cadastrar novo produto válido")
     public void testCadastrarNovoProdutoValido() {
 
@@ -69,6 +71,7 @@ public class ProdutoTest {
     }
 
     @Test
+    @Order(3)
     @DisplayName("Não permite cadastrar produto ja registrado no sistema")
     public void testNaoPermiteCadastrarProdutoJaRegistrado() {
 
@@ -107,6 +110,7 @@ public class ProdutoTest {
     }
 
     @Test
+    @Order(4)
     @DisplayName("Não permite cadastrar produto sem enviar o parametro do token corretamente na requisição")
     public void testNaoPermiteCadastrarProdutoSemOParametroTokenCorreto() {
 
@@ -145,6 +149,7 @@ public class ProdutoTest {
     }
 
     @Test
+    @Order(5)
     @DisplayName("Não permite cadastrar produto com token inválido")
     public void testNaoPermiteCadastrarProdutoComTokenInvalido() {
 
@@ -181,6 +186,7 @@ public class ProdutoTest {
     }
 
     @Test
+    @Order(6)
     @DisplayName("Não permite cadastrar produto com usuário administrador = false")
     public void testNaoPermiteCadastrarProdutoComADMIgualFalse() {
 
@@ -219,6 +225,7 @@ public class ProdutoTest {
     }
 
     @Test
+    @Order(7)
     @DisplayName("Não permitir cadastrar produto com usuário inválido")
     public void testNaoPermiteCadastrarProdutoComUsuarioInvalido() {
 
@@ -246,6 +253,7 @@ public class ProdutoTest {
     }
 
     @Test
+    @Order(8)
     @DisplayName("Excluir um produto valido")
     public void testExcluirUmProdutoValido() {
 
