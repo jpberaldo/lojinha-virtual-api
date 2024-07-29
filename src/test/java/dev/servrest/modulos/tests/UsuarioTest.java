@@ -199,7 +199,7 @@ public class UsuarioTest {
     public void testBuscarUsuarioFiltrandoPorNome() {
 
         this.response = given()
-                .param("nome", "Fulano")
+                .queryParam("nome", "Fulano")
                 .when()
                 .get("/usuarios")
                 .then()
@@ -216,7 +216,7 @@ public class UsuarioTest {
     public void testBuscarUsuarioFiltrandoPorEmail() {
 
         this.response = given()
-                .param("email", "fulano@qa.com")
+                .queryParam("email", "fulano@qa.com")
                 .when()
                 .get("/usuarios")
                 .then()
@@ -233,7 +233,7 @@ public class UsuarioTest {
     public void testBuscarUsuarioFiltrandoPorSenha() {
 
         this.response = given()
-                .param("password", "teste")
+                .queryParam("password", "teste")
                 .when()
                 .get("/usuarios")
                 .then()
@@ -250,7 +250,7 @@ public class UsuarioTest {
     public void testVerificarEListarSeUsuarioEAdministrador() {
 
         this.response = given()
-                .param("administrador", "false")
+                .queryParam("administrador", "false")
                 .when()
                 .get("/usuarios")
                 .then()
@@ -272,7 +272,7 @@ public class UsuarioTest {
         parametros.put("email", "fulano@qa.com");
 
         this.response = given()
-                .params(parametros)
+                .queryParams(parametros)
                 .when()
                 .get("/usuarios")
                 .then()
@@ -291,7 +291,7 @@ public class UsuarioTest {
     public void testBuscarUsuarioFiltrandoPorNomeNaoEncontrado() {
 
         this.response = given()
-                .param("nome", "Teste")
+                .queryParam("nome", "Teste")
                 .when()
                 .get("/usuarios")
                 .then()
