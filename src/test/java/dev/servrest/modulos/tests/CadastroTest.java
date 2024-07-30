@@ -89,4 +89,28 @@ public class CadastroTest {
 
     }
 
+    @Test
+    @Order(4)
+    @DisplayName("Validar que não permite cadastrar novo usuario com método da Requisão PUT")
+    public void testValidarNaoPermiteCadastrarUsuarioComChamadaReqPut() {
+
+
+        Response res = given()
+                .contentType(ContentType.JSON)
+                .body(CadastroData.informarDadosDeCadastro("Joao", "teste@emailnovo.com", "teste", "true"))
+                .when()
+                .put("/usuarios");
+
+        //1 jeito de fazer as validações
+        Assertions.assertEquals(res.getStatusCode(), 405);
+
+        String message = res.jsonPath().getString("message");
+        //Outro jeito de validar
+        Assertions.assertEquals(message, "Não é possível realizar PUT em /usuarios. Acesse http://localhost:3000 para ver as rotas disponíveis e como utilizá-las.");
+
+        //para exibir toda a saída da resposta(header + body)
+        res.then().log().all();
+
+    }
+
 }
