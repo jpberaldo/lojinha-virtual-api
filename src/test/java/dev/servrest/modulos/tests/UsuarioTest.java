@@ -5,6 +5,7 @@ import dev.servrest.modulos.utils.Service;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import org.apache.http.HttpStatus;
+import org.json.JSONObject;
 import org.junit.jupiter.api.*;
 
 import java.util.HashMap;
@@ -300,6 +301,25 @@ public class UsuarioTest {
                 .extract().response();
 
         System.out.println(response.asString());
+
+    }
+
+    @Test
+    @Order(16)
+    @DisplayName("Validar lista de usuários cadastrados de outro jeito")
+    public void testValidarListaDeUsuariosCadastrados() {
+
+        //Como exibir e filtrar dentro de uma
+        // lista de objetos que estao dentro de um body convertido para Json
+        this.response = given().
+                when().
+                get("/usuarios");
+
+        JSONObject json = new JSONObject(response.asString());
+        for (int i = 0; i < json.getJSONArray("usuarios").length(); i++) {
+            String usuariosNome = json.getJSONArray("usuarios").getJSONObject(i).get("nome").toString();
+            System.out.println(usuariosNome);
+        }
 
     }
 
