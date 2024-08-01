@@ -1,9 +1,10 @@
 package dev.servrest.modulos.tests;
 
 import com.github.javafaker.Faker;
+
+import static dev.servrest.modulos.data.FactoryData.*;
+
 import dev.servrest.modulos.data.CadastroData;
-import dev.servrest.modulos.data.FactoryData;
-import dev.servrest.modulos.data.UsuarioData;
 import dev.servrest.modulos.utils.Service;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
@@ -33,7 +34,11 @@ public class CadastroTest {
 
         this.response = given().
                 contentType(ContentType.JSON)
-                .body(CadastroData.informarDadosDeCadastro(FactoryData.setDados(dados.name().fullName()), "beltrano@qa.com.br", "teste", "true"))
+                .body(CadastroData.informarDadosDeCadastro(
+                        setDados(dados.name().fullName()),
+                        setDados(dados.internet().safeEmailAddress()),
+                        setDados(dados.internet().password()),
+                        "true"))
                 .when()
                 .post("/usuarios")
                 .then()
@@ -42,7 +47,7 @@ public class CadastroTest {
                 .body("message", equalTo("Este email já está sendo usado"))
                 .extract().response();
 
-        System.out.println("Nome utilizado" + FactoryData.getDados(dados));
+        System.out.println("Nome utilizado" + getDados(dados));
         System.out.println(response.asString());
 
     }
