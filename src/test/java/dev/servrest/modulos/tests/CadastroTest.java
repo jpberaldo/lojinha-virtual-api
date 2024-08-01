@@ -1,11 +1,15 @@
 package dev.servrest.modulos.tests;
 
+import com.github.javafaker.Faker;
 import dev.servrest.modulos.data.CadastroData;
+import dev.servrest.modulos.data.FactoryData;
 import dev.servrest.modulos.data.UsuarioData;
 import dev.servrest.modulos.utils.Service;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import org.junit.jupiter.api.*;
+
+import java.util.Locale;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.equalTo;
@@ -15,6 +19,7 @@ import static org.hamcrest.Matchers.equalTo;
 public class CadastroTest {
 
     Response response;
+    Faker dados = new Faker(new Locale("pt-BR"));
 
     @BeforeEach
     public void beforeEach() {
@@ -28,7 +33,7 @@ public class CadastroTest {
 
         this.response = given().
                 contentType(ContentType.JSON)
-                .body(CadastroData.informarDadosDeCadastro("Fulano da Silva", "beltrano@qa.com.br", "teste", "true"))
+                .body(CadastroData.informarDadosDeCadastro(FactoryData.setDados(dados.name().fullName()), "beltrano@qa.com.br", "teste", "true"))
                 .when()
                 .post("/usuarios")
                 .then()
@@ -37,6 +42,7 @@ public class CadastroTest {
                 .body("message", equalTo("Este email já está sendo usado"))
                 .extract().response();
 
+        System.out.println("Nome utilizado" + FactoryData.getDados(dados));
         System.out.println(response.asString());
 
     }
@@ -49,7 +55,7 @@ public class CadastroTest {
 
         response = given()
                 .contentType(ContentType.JSON)
-                .body(CadastroData.informarDadosDeCadastro("Joao", "teste@emailnovo.com", "teste", "true"))
+                .body(CadastroData.informarDadosDeCadastro(FactoryData.setDados(dados.name().fullName()), "test@emailnovo.com", "teste", "true"))
                 .when()
                 .post("/usuarios")
                 .then()
