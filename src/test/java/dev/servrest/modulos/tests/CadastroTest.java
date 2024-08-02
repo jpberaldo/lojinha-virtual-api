@@ -60,7 +60,7 @@ public class CadastroTest {
 
         response = given()
                 .contentType(ContentType.JSON)
-                .body(CadastroData.informarDadosDeCadastro(FactoryData.setDados(dados.name().fullName()), "test@emailnovo.com", "teste", "true"))
+                .body(CadastroData.informarDadosDeCadastro(setDados(dados.name().fullName()), "test@emailnovo.com", "teste", "true"))
                 .when()
                 .post("/usuarios")
                 .then()
