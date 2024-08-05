@@ -21,6 +21,7 @@ public class CadastroTest {
 
     Response response;
     Faker dados = new Faker(new Locale("pt-BR"));
+    final String EMAIL_REPETIDO = "beltrano@qa.com.br";
 
     @BeforeEach
     public void beforeEach() {
@@ -36,7 +37,7 @@ public class CadastroTest {
                 contentType(ContentType.JSON)
                 .body(CadastroData.informarDadosDeCadastro(
                         setDados(dados.name().fullName()),
-                        setDados(dados.internet().safeEmailAddress()),
+                        EMAIL_REPETIDO,
                         setDados(dados.internet().password()),
                         "true"))
                 .when()
