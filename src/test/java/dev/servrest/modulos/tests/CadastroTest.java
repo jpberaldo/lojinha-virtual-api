@@ -21,7 +21,6 @@ public class CadastroTest {
 
     Response response;
     Faker dados = new Faker(new Locale("pt-BR"));
-    final String EMAIL_REPETIDO = "beltrano@qa.com.br";
 
     @BeforeEach
     public void beforeEach() {
@@ -48,7 +47,7 @@ public class CadastroTest {
                 .body("message", equalTo("Este email já está sendo usado"))
                 .extract().response();
 
-        System.out.println("Nome utilizado" + getDados(dados));
+        System.out.println("Nome utilizado" + getDados());
         System.out.println(response.asString());
 
     }
@@ -58,10 +57,13 @@ public class CadastroTest {
     @DisplayName("Cadastrar novo usuario com dados validos")
     public void testCadastrarNovoUsuarioComSucesso() {
 
-
         response = given()
                 .contentType(ContentType.JSON)
-                .body(CadastroData.informarDadosDeCadastro(setDados(dados.name().fullName()), "test@emailnovo.com", "teste", "true"))
+                .body(CadastroData.informarDadosDeCadastro(
+                        setDados(dados.name().fullName()),
+                        setDados(dados.internet().emailAddress()),
+                        setDados(dados.internet().password()),
+                        "true"))
                 .when()
                 .post("/usuarios")
                 .then()
@@ -70,6 +72,7 @@ public class CadastroTest {
                 .body("message", equalTo("Cadastro realizado com sucesso"))
                 .extract().response();
 
+        System.out.println("Dados do cadastro" + getDados());
         System.out.println(response.asString());
 
     }
