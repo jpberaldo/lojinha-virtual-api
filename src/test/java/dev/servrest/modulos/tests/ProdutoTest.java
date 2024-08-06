@@ -1,5 +1,6 @@
 package dev.servrest.modulos.tests;
 
+import com.github.javafaker.Faker;
 import dev.servrest.modulos.data.ProdutoData;
 import dev.servrest.modulos.utils.Service;
 import dev.servrest.modulos.utils.Token;
@@ -8,6 +9,9 @@ import io.restassured.response.Response;
 import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.*;
 
+import java.util.Locale;
+
+import static dev.servrest.modulos.data.FactoryData.*;
 import static io.restassured.RestAssured.*;
 import static org.hamcrest.Matchers.equalTo;
 
@@ -16,6 +20,7 @@ import static org.hamcrest.Matchers.equalTo;
 public class ProdutoTest {
 
     Response response;
+    Faker dados = new Faker(new Locale("pt-BR"));
 
     @BeforeEach
     public void beforeEach() {
@@ -61,7 +66,7 @@ public class ProdutoTest {
         Response response = given()
                 .contentType(ContentType.JSON)
                 .header("authorization", token.getToken())
-                .body(ProdutoData.cadastrarProduto("Bola de futebol", "Para praticar esporte", 50, 10))
+                .body(ProdutoData.cadastrarProduto(setDados(dados.food().dish()), "XXX", Integer.parseInt(setDados(String.valueOf(dados.random().nextInt(10000)))), 10))
                 .when()
                 .post("/produtos")
                 .then()
