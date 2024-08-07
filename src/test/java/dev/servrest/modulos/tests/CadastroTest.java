@@ -112,7 +112,11 @@ public class CadastroTest {
 
         Response res = given()
                 .contentType(ContentType.JSON)
-                .body(CadastroData.informarDadosDeCadastro("Joao", "teste@emailnovo.com", "teste", "true"))
+                .body(CadastroData.informarDadosDeCadastro(
+                        setDados(dados.name().fullName()),
+                        setDados(dados.internet().emailAddress()),
+                        setDados(dados.internet().password()),
+                        "true"))
                 .when()
                 .put("/usuarios");
 
