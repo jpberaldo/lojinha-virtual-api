@@ -2,6 +2,7 @@ package dev.servrest.modulos.tests;
 
 import com.github.javafaker.Faker;
 import dev.servrest.modulos.data.ProdutoData;
+import dev.servrest.modulos.data.UsuarioData;
 import dev.servrest.modulos.utils.Service;
 import dev.servrest.modulos.utils.Token;
 import io.restassured.http.ContentType;
@@ -85,10 +86,7 @@ public class ProdutoTest {
 
         String token = given().
                 contentType(ContentType.JSON)
-                .body("{\n" +
-                        "  \"email\": \"fulano@qa.com\",\n" +
-                        "  \"password\": \"teste\"\n" +
-                        "}")
+                .body(UsuarioData.realizarLoginComUsuario("fulano@qa.com", "teste"))
                 .when()
                 .post("/login")
                 .then()
