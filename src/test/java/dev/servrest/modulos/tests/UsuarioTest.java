@@ -323,4 +323,28 @@ public class UsuarioTest {
 
     }
 
+    @Test
+    @Order(17)
+    @DisplayName("Editar dados de um usuário com sucesso")
+    public void testEditarDadosDeUmUsuarioComSucesso(){
+
+        response = given()
+                .pathParam("_id", "3voIW0eX25UpduaG")
+                .contentType(ContentType.JSON)
+                .body("{\n" +
+                        "  \"nome\": \"Teste alteracao\",\n" +
+                        "  \"email\": \"teste@emailtestes.com\",\n" +
+                        "  \"password\": \"teste\",\n" +
+                        "  \"administrador\": \"false\"\n" +
+                        "}")
+                .put("/usuarios/{_id}")
+                .then()
+                .assertThat()
+                .statusCode(HttpStatus.SC_OK)
+                .body("message", equalTo("Registro alterado com sucesso"))
+                .extract().response();
+
+        System.out.println(response.asString());
+    }
+
 }
