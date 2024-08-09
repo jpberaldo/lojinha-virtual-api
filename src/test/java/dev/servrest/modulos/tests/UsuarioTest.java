@@ -347,4 +347,29 @@ public class UsuarioTest {
         System.out.println(response.asString());
     }
 
+    @Test
+    @Order(18)
+    @DisplayName("Editar dados de um usuário com Id inválido")
+    public void testEditarDadosDeUmUsuarioComIdInvalido(){
+
+        response = given()
+                .pathParam("_id", "xxx")
+                .contentType(ContentType.JSON)
+                .body("{\n" +
+                        "  \"nome\": \"Teste alteracao\",\n" +
+                        "  \"email\": \"teste@emailtestes.com\",\n" +
+                        "  \"password\": \"teste\",\n" +
+                        "  \"administrador\": \"false\"\n" +
+                        "}")
+                .put("/usuarios/{_id}")
+                .then()
+                .assertThat()
+                .statusCode(HttpStatus.SC_BAD_REQUEST)
+                .body("message", equalTo("Este email já está sendo usado"))
+                .extract().response();
+
+        System.out.println(response.asString());
+    }
+
+
 }
