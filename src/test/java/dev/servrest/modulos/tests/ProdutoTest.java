@@ -12,8 +12,8 @@ import org.junit.jupiter.api.*;
 
 import java.util.Locale;
 
-import static dev.servrest.modulos.data.FactoryData.*;
-import static io.restassured.RestAssured.*;
+import static dev.servrest.modulos.data.FactoryData.setDados;
+import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.equalTo;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
@@ -272,6 +272,29 @@ public class ProdutoTest {
                 .statusCode(HttpStatus.SC_OK)
                 .statusCode(200)
                 .body("message", equalTo("Registro excluído com sucesso"))
+                .log().all();
+
+    }
+
+    @Test
+    @Order(8)
+    @DisplayName("Alterar o nome de um produto com sucesso")
+    public void testAlterarNomeDeProdutoComSucesso() {
+
+        String token = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImZ1bGFub0BxYS5jb20iLCJwYXNzd29yZCI6InRlc3RlIiwiaWF0IjoxNzIzMzAyODQ0LCJleHAiOjE3MjMzMDM0NDR9.-y6CKs9H4hJ0YTcUUHps4mAAVssa82Ze-Il6k8rkETo";
+
+        given()
+                .pathParam("_id", "2BzdoHyKrrg2J51p")
+                .contentType(ContentType.JSON)
+                .header("authorization", token)
+                .body(ProdutoData.cadastrarProduto("Logitech GPRO Purple Novo", "Mouse Alterado", 210, 5))
+                .when()
+                .put("/produtos/{_id}")
+                .then()
+                .assertThat()
+                .statusCode(HttpStatus.SC_OK)
+                .and()
+                .body("message", equalTo("Registro alterado com sucesso"))
                 .log().all();
 
     }
