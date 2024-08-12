@@ -20,6 +20,7 @@ import static org.hamcrest.Matchers.equalTo;
 @DisplayName("Testes que validam a classe de Produto")
 public class ProdutoTest {
 
+    private String userId = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImZ1bGFub0BxYS5jb20iLCJwYXNzd29yZCI6InRlc3RlIiwiaWF0IjoxNzIzNDk1MzU4LCJleHAiOjE3MjM0OTU5NTh9.rAXikTgF333Ft_-g1tavN9kmcvSCAzXspRJFMzcIIpQ";
     Response response;
     Faker dados = new Faker(new Locale("pt-BR"));
 
@@ -281,12 +282,10 @@ public class ProdutoTest {
     @DisplayName("Alterar o nome de um produto com sucesso")
     public void testAlterarNomeDeProdutoComSucesso() {
 
-        String token = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImZ1bGFub0BxYS5jb20iLCJwYXNzd29yZCI6InRlc3RlIiwiaWF0IjoxNzIzMzAyODQ0LCJleHAiOjE3MjMzMDM0NDR9.-y6CKs9H4hJ0YTcUUHps4mAAVssa82Ze-Il6k8rkETo";
-
         given()
                 .pathParam("_id", "2BzdoHyKrrg2J51p")
                 .contentType(ContentType.JSON)
-                .header("authorization", token)
+                .header("authorization", userId)
                 .body(ProdutoData.cadastrarProduto("Logitech GPRO Purple Novo", "Mouse Alterado", 210, 5))
                 .when()
                 .put("/produtos/{_id}")
@@ -295,6 +294,27 @@ public class ProdutoTest {
                 .statusCode(HttpStatus.SC_OK)
                 .and()
                 .body("message", equalTo("Registro alterado com sucesso"))
+                .log().all();
+
+    }
+
+    @Test
+    @Order(9)
+    @DisplayName("Validar que nao permite alterar nome de produto para um existente")
+    public void testAlterarNomeDeProdutoComNaoSucesso() {
+
+        given()
+                .pathParam("_id", "0uxuPY0cbmQhpEz1")
+                .contentType(ContentType.JSON)
+                .header("authorization", userId)
+                .body(ProdutoData.cadastrarProduto("Logitech GPRO Purple Novo", "Mouse Alterado", 210, 5))
+                .when()
+                .put("/produtos/{_id}")
+                .then()
+                .assertThat()
+                .statusCode(HttpStatus.SC_BAD_REQUEST)
+                .and()
+                .body("message", equalTo("Já existe produto com esse nome"))
                 .log().all();
 
     }
