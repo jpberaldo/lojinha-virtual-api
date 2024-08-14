@@ -341,4 +341,26 @@ public class ProdutoTest {
     }
 
 
+    @Test
+    @Order(11)
+    @DisplayName("Validar que nao permite alterar produto com token de usuário inválido")
+    public void testAlterarNomeProdutoComTokenDeUsuarioInvalido() {
+
+        given()
+                .pathParam("_id", "abc")
+                .contentType(ContentType.JSON)
+                .header("authorization", userId)
+                .body(ProdutoData.cadastrarProduto("Logitech GPRO Purple Novo", "Mouse Alterado", 210, 5))
+                .when()
+                .put("/produtos/{_id}")
+                .then()
+                .assertThat()
+                .statusCode(HttpStatus.SC_UNAUTHORIZED)
+                .and()
+                .body("message", equalTo("Token de acesso ausente, inválido, expirado ou usuário do token não existe mais"))
+                .log().all();
+
+    }
+
+
 }
