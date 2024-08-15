@@ -27,6 +27,7 @@ public class ProdutoTest {
     @BeforeEach
     public void beforeEach() {
         Service.configurarEnderecoDaRequisicaoChamada();
+
     }
 
     @Test
@@ -278,15 +279,21 @@ public class ProdutoTest {
     }
 
     @Test
-    @Order(8)
+    @Order(9)
     @DisplayName("Alterar o nome de um produto com sucesso")
     public void testAlterarNomeDeProdutoComSucesso() {
 
+        Response produtoResponse = given().when().get("/produtos").then().extract().response();
+        Response userLogin = given().contentType(ContentType.JSON).body(UsuarioData.realizarLoginComUsuario("fulano@qa.com", "teste")).when().post("/login").then().extract().response();
+
+        String productID = produtoResponse.jsonPath().getString("produtos[8]._id");
+        String token = userLogin.jsonPath().getString("authorization");
+
         given()
-                .pathParam("_id", "2BzdoHyKrrg2J51p")
+                .pathParam("_id", productID)
                 .contentType(ContentType.JSON)
-                .header("authorization", userId)
-                .body(ProdutoData.cadastrarProduto("Logitech GPRO Purple Novo", "Mouse Alterado", 210, 5))
+                .header("authorization", token)
+                .body(ProdutoData.cadastrarProduto("Teste T1", "Alterando descricao", 200, 10))
                 .when()
                 .put("/produtos/{_id}")
                 .then()
@@ -299,7 +306,7 @@ public class ProdutoTest {
     }
 
     @Test
-    @Order(9)
+    @Order(10)
     @DisplayName("Validar que nao permite alterar nome de produto para um existente")
     public void testAlterarNomeDeProdutoComNaoSucesso() {
 
@@ -320,7 +327,7 @@ public class ProdutoTest {
     }
 
     @Test
-    @Order(10)
+    @Order(11)
     @DisplayName("Validar que nao permite alterar produto com token invalido")
     public void testAlterarNomeProdutoComTokenInvalido() {
 
@@ -342,7 +349,7 @@ public class ProdutoTest {
 
 
     @Test
-    @Order(11)
+    @Order(12)
     @DisplayName("Validar que nao permite alterar produto com token de usuário inválido")
     public void testAlterarNomeProdutoComTokenDeUsuarioInvalido() {
 
