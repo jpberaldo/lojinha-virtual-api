@@ -271,7 +271,6 @@ public class ProdutoTest {
                 .delete("/produtos/{_id}")
                 .then()
                 .assertThat()
-                .statusCode(HttpStatus.SC_OK)
                 .statusCode(200)
                 .body("message", equalTo("Registro excluído com sucesso"))
                 .log().all();
