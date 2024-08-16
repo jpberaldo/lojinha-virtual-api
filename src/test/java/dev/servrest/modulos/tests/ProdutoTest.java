@@ -282,16 +282,10 @@ public class ProdutoTest {
     @DisplayName("Alterar o nome de um produto com sucesso")
     public void testAlterarNomeDeProdutoComSucesso() {
 
-        Response produtoResponse = given().when().get("/produtos").then().extract().response();
-        Response userLogin = given().contentType(ContentType.JSON).body(UsuarioData.realizarLoginComUsuario("fulano@qa.com", "teste")).when().post("/login").then().extract().response();
-
-        String productID = produtoResponse.jsonPath().getString("produtos[8]._id");
-        String token = userLogin.jsonPath().getString("authorization");
-
         given()
-                .pathParam("_id", productID)
+                .pathParam("_id", Service.gerarProdutoId())
                 .contentType(ContentType.JSON)
-                .header("authorization", token)
+                .header("authorization", Service.gerarTokenUsuario())
                 .body(ProdutoData.cadastrarProduto("Teste T1", "Alterando descricao", 210, 10))
                 .when()
                 .put("/produtos/{_id}")
