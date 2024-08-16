@@ -292,7 +292,7 @@ public class ProdutoTest {
                 .pathParam("_id", productID)
                 .contentType(ContentType.JSON)
                 .header("authorization", token)
-                .body(ProdutoData.cadastrarProduto("Teste T1", "Alterando descricao", 200, 10))
+                .body(ProdutoData.cadastrarProduto("Teste T1", "Alterando descricao", 210, 10))
                 .when()
                 .put("/produtos/{_id}")
                 .then()
