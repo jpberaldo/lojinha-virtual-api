@@ -18,9 +18,9 @@ public class Service {
 
     }
 
-    public static String gerarProdutoId(int usuario) {
+    public static String gerarProdutoId(int produto) {
         response = given().when().get("/produtos").then().extract().response();
-        String productID = response.jsonPath().getString("produtos[" + usuario + "]._id");
+        String productID = response.jsonPath().getString("produtos[" + produto + "]._id");
         return productID;
     }
 
