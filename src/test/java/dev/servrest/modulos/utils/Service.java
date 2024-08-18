@@ -18,17 +18,17 @@ public class Service {
 
     }
 
-    public static String gerarProdutoId() {
+    public static String gerarProdutoId(int usuario) {
         response = given().when().get("/produtos").then().extract().response();
-        String productID = response.jsonPath().getString("produtos[8]._id");
+        String productID = response.jsonPath().getString("produtos[" + usuario + "]._id");
         return productID;
     }
 
-    public static String gerarTokenUsuario() {
+    public static String gerarTokenUsuario(String email, String senha) {
 
         response = given()
                 .contentType(ContentType.JSON)
-                .body(UsuarioData.realizarLoginComUsuario("fulano@qa.com", "teste"))
+                .body(UsuarioData.realizarLoginComUsuario(email, senha))
                 .when()
                 .post("/login")
                 .then().extract().response();

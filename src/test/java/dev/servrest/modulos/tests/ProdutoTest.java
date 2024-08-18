@@ -283,10 +283,10 @@ public class ProdutoTest {
     public void testAlterarNomeDeProdutoComSucesso() {
 
         given()
-                .pathParam("_id", Service.gerarProdutoId())
+                .pathParam("_id", Service.gerarProdutoId(0))
                 .contentType(ContentType.JSON)
-                .header("authorization", Service.gerarTokenUsuario())
-                .body(ProdutoData.cadastrarProduto("Teste T1", "Alterando descricao", 210, 10))
+                .header("authorization", Service.gerarTokenUsuario("fulano@qa.com", "teste"))
+                .body(ProdutoData.cadastrarProduto("Teste T3", "Alterando descricao", 210, 10))
                 .when()
                 .put("/produtos/{_id}")
                 .then()
