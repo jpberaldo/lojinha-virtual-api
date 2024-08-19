@@ -266,7 +266,7 @@ public class ProdutoTest {
     public void testExcluirUmProdutoValido() {
 
         given()
-                .pathParam("_id", "8fp9Pmu2hUMnLylM")
+                .pathParam("_id", Service.gerarProdutoId(0))
                 .when()
                 .delete("/produtos/{_id}")
                 .then()
