@@ -237,11 +237,9 @@ public class ProdutoTest {
     @DisplayName("Não permitir cadastrar produto com usuário inválido")
     public void testNaoPermiteCadastrarProdutoComUsuarioInvalido() {
 
-        String tempToken = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3Rlc25vdm9AcWEuY29tLmJyIiwicGFzc3dvcmQiOiJ0ZXN0ZSIsImlhdCI6MTcyMDcyODI4MywiZXhwIjoxNzIwNzI4ODgzfQ.waV6O_a2cj18XZTPyzs5SsZclQ8QvQVYyYjvsgFg1TA";
-
         Response response = given()
                 .contentType(ContentType.JSON)
-                .header("authorization", tempToken)
+                .header("authorization", Service.gerarTokenUsuario("teste@xd.com", "teste"))
                 .body("{\n" +
                         "  \"nome\": \"Logitech GPRO Yellow\",\n" +
                         "  \"preco\": 150,\n" +
