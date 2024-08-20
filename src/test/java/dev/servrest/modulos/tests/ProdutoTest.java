@@ -1,8 +1,10 @@
 package dev.servrest.modulos.tests;
 
 import com.github.javafaker.Faker;
+import dev.servrest.modulos.data.CadastroData;
 import dev.servrest.modulos.data.ProdutoData;
 import dev.servrest.modulos.data.UsuarioData;
+import dev.servrest.modulos.pojo.ProdutoPojo;
 import dev.servrest.modulos.utils.Service;
 import dev.servrest.modulos.utils.Token;
 import io.restassured.http.ContentType;
@@ -240,12 +242,7 @@ public class ProdutoTest {
         Response response = given()
                 .contentType(ContentType.JSON)
                 .header("authorization", Service.gerarTokenUsuario("teste@xd.com", "teste"))
-                .body("{\n" +
-                        "  \"nome\": \"Logitech GPRO Yellow\",\n" +
-                        "  \"preco\": 150,\n" +
-                        "  \"descricao\": \"Mouse\",\n" +
-                        "  \"quantidade\": 10\n" +
-                        "}")
+                .body(ProdutoData.cadastrarProduto("Logitech GPRO Yellow", "XXX", 150, 20))
                 .when()
                 .post("/produtos")
                 .then()
