@@ -200,22 +200,9 @@ public class ProdutoTest {
     @DisplayName("Não permite cadastrar produto com usuário administrador = false")
     public void testNaoPermiteCadastrarProdutoComADMIgualFalse() {
 
-        String token = given().
-                contentType(ContentType.JSON)
-                .body("{\n" +
-                        "  \"email\": \"testesnovo@qa.com.br\",\n" +
-                        "  \"password\": \"teste\"\n" +
-                        "}")
-                .when()
-                .post("/login")
-                .then()
-                .extract().path("authorization");
-
-        System.out.println(token);
-
         Response response = given()
                 .contentType(ContentType.JSON)
-                .header("authorization", token)
+                .header("authorization", Service.gerarTokenUsuario("teste@xd.com", "teste"))
                 .body("{\n" +
                         "  \"nome\": \"Logitech GPRO Yellow\",\n" +
                         "  \"preco\": 150,\n" +
