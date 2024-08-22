@@ -82,16 +82,16 @@ public class CadastroTest {
     @DisplayName("Excluir um usuário existente")
     public void testExcluirUmUsuarioExistente() {
 
-        Response usuariosResponse = given()
-                .when()
-                .get("/usuarios")
-                .then()
-                .extract().response();
-
-        String idUsuario = usuariosResponse.jsonPath().getString("usuarios[4]._id");
+//        Response usuariosResponse = given()
+//                .when()
+//                .get("/usuarios")
+//                .then()
+//                .extract().response();
+//
+//        String idUsuario = usuariosResponse.jsonPath().getString("usuarios[4]._id");
 
         response = given()
-                .pathParam("_id", idUsuario)
+                .pathParam("_id", Service.selecionarUsuario(10))
                 .when()
                 .delete("/usuarios/{_id}")
                 .then()
