@@ -24,6 +24,12 @@ public class Service {
         return productID;
     }
 
+    public static String selecionarUsuario(int usuario){
+        response = given().when().get("/usuarios").then().extract().response();
+        String usuarioSelecionado = response.jsonPath().getString("produtos[" + usuario + "]._id");
+        return usuarioSelecionado;
+    }
+
     public static String gerarTokenUsuario(String email, String senha) {
 
         response = given()
