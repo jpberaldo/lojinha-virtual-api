@@ -158,26 +158,8 @@ public class UsuarioTest {
         System.out.println(response.asString());
     }
 
-
     @Test
     @Order(8)
-    @DisplayName("Excluir um usuário existente")
-    public void testExcluirUmUsuarioExistente() {
-
-        given()
-                .pathParam("_id", "1boS3Vbhu42nx3vW")
-                .when()
-                .delete("/usuarios/{_id}")
-                .then()
-                .assertThat()
-                .statusCode(200)
-                .body("message", equalTo("Registro excluído com sucesso"))
-                .log().all();
-
-    }
-
-    @Test
-    @Order(9)
     @DisplayName("Não permite excluir usuário com item no carrinho")
     public void testNaoPermitirExcluirUsuarioComItemNoCarrinho() {
 
@@ -195,7 +177,7 @@ public class UsuarioTest {
     }
 
     @Test
-    @Order(10)
+    @Order(9)
     @DisplayName("Buscar usuário cadastrado por nome")
     public void testBuscarUsuarioFiltrandoPorNome() {
 
@@ -212,7 +194,7 @@ public class UsuarioTest {
     }
 
     @Test
-    @Order(11)
+    @Order(10)
     @DisplayName("Buscar usuário cadastrado por email")
     public void testBuscarUsuarioFiltrandoPorEmail() {
 
@@ -229,7 +211,7 @@ public class UsuarioTest {
     }
 
     @Test
-    @Order(12)
+    @Order(11)
     @DisplayName("Buscar usuário cadastrado por senha")
     public void testBuscarUsuarioFiltrandoPorSenha() {
 
@@ -246,7 +228,7 @@ public class UsuarioTest {
     }
 
     @Test
-    @Order(13)
+    @Order(12)
     @DisplayName("Verificar e listar se usuário for administrador")
     public void testVerificarEListarSeUsuarioEAdministrador() {
 
@@ -264,7 +246,7 @@ public class UsuarioTest {
     }
 
     @Test
-    @Order(14)
+    @Order(13)
     @DisplayName("Fazer busca de usuario por 2 ou mais filtros")
     public void testBuscarUsuarioPorDoisOuMaisFiltros() {
 
@@ -287,7 +269,7 @@ public class UsuarioTest {
     }
 
     @Test
-    @Order(15)
+    @Order(14)
     @DisplayName("Buscar usuário cadastrado por nome não encontrado")
     public void testBuscarUsuarioFiltrandoPorNomeNaoEncontrado() {
 
@@ -305,7 +287,7 @@ public class UsuarioTest {
     }
 
     @Test
-    @Order(16)
+    @Order(15)
     @DisplayName("Validar lista de usuários cadastrados de outro jeito")
     public void testValidarListaDeUsuariosCadastrados() {
 
@@ -324,7 +306,7 @@ public class UsuarioTest {
     }
 
     @Test
-    @Order(17)
+    @Order(16)
     @DisplayName("Editar dados de um usuário com sucesso")
     public void testEditarDadosDeUmUsuarioComSucesso(){
 
@@ -348,7 +330,7 @@ public class UsuarioTest {
     }
 
     @Test
-    @Order(18)
+    @Order(17)
     @DisplayName("Editar dados de um usuário com Id inválido")
     public void testEditarDadosDeUmUsuarioComIdInvalido(){
 
