@@ -178,6 +178,24 @@ public class UsuarioTest {
 
     @Test
     @Order(9)
+    @DisplayName("Não permite excluir usuário com item no carrinho")
+    public void testNaoPermitirExcluirUsuarioComItemNoCarrinho() {
+
+        given()
+                .pathParam("_id", "0uxuPY0cbmQhpEz1")
+                .when()
+                .delete("/usuarios/{_id}")
+                .then()
+                .assertThat()
+                .statusCode(HttpStatus.SC_BAD_REQUEST)
+                .statusCode(400)
+                .body("message", equalTo("Não é permitido excluir usuário com carrinho cadastrado"))
+                .log().all();
+
+    }
+
+    @Test
+    @Order(10)
     @DisplayName("Buscar usuário cadastrado por nome")
     public void testBuscarUsuarioFiltrandoPorNome() {
 
@@ -194,7 +212,7 @@ public class UsuarioTest {
     }
 
     @Test
-    @Order(10)
+    @Order(11)
     @DisplayName("Buscar usuário cadastrado por email")
     public void testBuscarUsuarioFiltrandoPorEmail() {
 
@@ -211,7 +229,7 @@ public class UsuarioTest {
     }
 
     @Test
-    @Order(11)
+    @Order(12)
     @DisplayName("Buscar usuário cadastrado por senha")
     public void testBuscarUsuarioFiltrandoPorSenha() {
 
@@ -228,7 +246,7 @@ public class UsuarioTest {
     }
 
     @Test
-    @Order(12)
+    @Order(13)
     @DisplayName("Verificar e listar se usuário for administrador")
     public void testVerificarEListarSeUsuarioEAdministrador() {
 
@@ -246,7 +264,7 @@ public class UsuarioTest {
     }
 
     @Test
-    @Order(13)
+    @Order(14)
     @DisplayName("Fazer busca de usuario por 2 ou mais filtros")
     public void testBuscarUsuarioPorDoisOuMaisFiltros() {
 
@@ -269,7 +287,7 @@ public class UsuarioTest {
     }
 
     @Test
-    @Order(14)
+    @Order(15)
     @DisplayName("Buscar usuário cadastrado por nome não encontrado")
     public void testBuscarUsuarioFiltrandoPorNomeNaoEncontrado() {
 
@@ -287,7 +305,7 @@ public class UsuarioTest {
     }
 
     @Test
-    @Order(15)
+    @Order(16)
     @DisplayName("Validar lista de usuários cadastrados de outro jeito")
     public void testValidarListaDeUsuariosCadastrados() {
 
@@ -306,7 +324,7 @@ public class UsuarioTest {
     }
 
     @Test
-    @Order(16)
+    @Order(17)
     @DisplayName("Editar dados de um usuário com sucesso")
     public void testEditarDadosDeUmUsuarioComSucesso(){
 
