@@ -30,6 +30,12 @@ public class Service {
         return usuarioSelecionado;
     }
 
+    public static String selecionarCarrinho(int carrinho){
+        response = given().when().get("/carrinhos").then().extract().response();
+        String carrinhoSelecionado = response.jsonPath().getString("carrinhos[" + carrinho + "]._id");
+        return carrinhoSelecionado;
+    }
+
     public static String gerarTokenUsuario(String email, String senha) {
 
         response = given()

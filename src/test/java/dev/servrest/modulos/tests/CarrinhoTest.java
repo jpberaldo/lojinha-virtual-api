@@ -38,7 +38,7 @@ public class CarrinhoTest {
     public void testBuscarCarrinhoPorId() {
 
         this.response = given()
-                .pathParam("_id", "qbMqntef4iTOwWfg")
+                .pathParam("_id", Service.selecionarCarrinho(0))
                 .when()
                 .get("/carrinhos/{_id}")
                 .then()
