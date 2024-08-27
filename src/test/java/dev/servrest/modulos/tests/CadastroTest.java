@@ -91,7 +91,7 @@ public class CadastroTest {
 //        String idUsuario = usuariosResponse.jsonPath().getString("usuarios[4]._id");
 
         response = given()
-                .pathParam("_id", Service.selecionarUsuario(10))
+                .pathParam("_id", Service.selecionarUltimoUsuario())
                 .when()
                 .delete("/usuarios/{_id}")
                 .then()
