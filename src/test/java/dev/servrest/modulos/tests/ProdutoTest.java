@@ -130,13 +130,13 @@ public class ProdutoTest {
                 .when()
                 .post("/login")
                 .then()
-                .extract().path("authorization.");
+                .extract().path("authorization");
 
         System.out.println(token);
 
         Response response = given()
                 .contentType(ContentType.JSON)
-                .header("authorization", token)
+                .header("authorization", token +  "a")
                 .body("{\n" +
                         "  \"nome\": \"Logitech GPRO Pink\",\n" +
                         "  \"preco\": 600,\n" +
