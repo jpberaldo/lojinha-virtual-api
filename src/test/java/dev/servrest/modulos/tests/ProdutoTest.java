@@ -126,20 +126,17 @@ public class ProdutoTest {
 
         String token = given().
                 contentType(ContentType.JSON)
-                .body("{\n" +
-                        "  \"email\": \"fulano@qa.com\",\n" +
-                        "  \"password\": \"teste\"\n" +
-                        "}")
+                .body(Service.gerarTokenUsuario("fulano@qa.com", "teste"))
                 .when()
                 .post("/login")
                 .then()
-                .extract().path("authorization");
+                .extract().path("authorization.");
 
         System.out.println(token);
 
         Response response = given()
                 .contentType(ContentType.JSON)
-                .header("authorizatio", token)
+                .header("authorization", token)
                 .body("{\n" +
                         "  \"nome\": \"Logitech GPRO Pink\",\n" +
                         "  \"preco\": 600,\n" +
@@ -203,12 +200,8 @@ public class ProdutoTest {
         Response response = given()
                 .contentType(ContentType.JSON)
                 .header("authorization", Service.gerarTokenUsuario("teste@xd.com", "teste"))
-                .body("{\n" +
-                        "  \"nome\": \"Logitech GPRO Yellow\",\n" +
-                        "  \"preco\": 150,\n" +
-                        "  \"descricao\": \"Mouse\",\n" +
-                        "  \"quantidade\": 10\n" +
-                        "}")
+                .body(ProdutoData.cadastrarProduto(setDados(dados.name().fullName()),
+                        setDados(dados.music().genre()), 150, 10))
                 .when()
                 .post("/produtos")
                 .then()
