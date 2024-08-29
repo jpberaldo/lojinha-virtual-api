@@ -1,10 +1,8 @@
 package dev.servrest.modulos.tests;
 
 import com.github.javafaker.Faker;
-import dev.servrest.modulos.data.CadastroData;
 import dev.servrest.modulos.data.ProdutoData;
 import dev.servrest.modulos.data.UsuarioData;
-import dev.servrest.modulos.pojo.ProdutoPojo;
 import dev.servrest.modulos.utils.Service;
 import dev.servrest.modulos.utils.Token;
 import io.restassured.http.ContentType;
@@ -101,12 +99,8 @@ public class ProdutoTest {
         Response response = given()
                 .contentType(ContentType.JSON)
                 .header("authorization", token)
-                .body("{\n" +
-                        "  \"nome\": \"Logitech GPRO Pink\",\n" +
-                        "  \"preco\": 600,\n" +
-                        "  \"descricao\": \"Mouse\",\n" +
-                        "  \"quantidade\": 80\n" +
-                        "}")
+                .body(ProdutoData.cadastrarProduto(setDados(dados.name().fullName()),
+                        setDados(dados.music().genre()), 150, 10))
                 .when()
                 .post("/produtos")
                 .then()
@@ -136,7 +130,7 @@ public class ProdutoTest {
 
         Response response = given()
                 .contentType(ContentType.JSON)
-                .header("authorization", token +  "a")
+                .header("authorization", token + "a")
                 .body("{\n" +
                         "  \"nome\": \"Logitech GPRO Pink\",\n" +
                         "  \"preco\": 600,\n" +
@@ -173,13 +167,9 @@ public class ProdutoTest {
 
         Response response = given()
                 .contentType(ContentType.JSON)
-                .header("authorization", "a")
-                .body("{\n" +
-                        "  \"nome\": \"Logitech GPRO Pink\",\n" +
-                        "  \"preco\": 600,\n" +
-                        "  \"descricao\": \"Mouse\",\n" +
-                        "  \"quantidade\": 80\n" +
-                        "}")
+                .header("authorization", token + "a")
+                .body(ProdutoData.cadastrarProduto(setDados(dados.food().dish()),
+                        setDados(dados.music().genre()), 150, 10))
                 .when()
                 .post("/produtos")
                 .then()
