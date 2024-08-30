@@ -164,7 +164,7 @@ public class UsuarioTest {
     public void testNaoPermitirExcluirUsuarioComItemNoCarrinho() {
 
         given()
-                .pathParam("_id", "0uxuPY0cbmQhpEz1")
+                .pathParam("_id", Service.selecionarUsuario(0))
                 .when()
                 .delete("/usuarios/{_id}")
                 .then()
