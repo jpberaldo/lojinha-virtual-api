@@ -93,6 +93,32 @@ public class CarrinhoTest {
                 .extract().response();
         System.out.println(response.asString());
 
+    }
+
+    @Test
+    @Order(5)
+    @DisplayName("Realizar teste que não permite incluir produto no carrinho sem informar o id do produto")
+    public void testNaoPermiteCadastroSemInformarIdDoProduto() {
+
+        this.response = given()
+                .contentType(ContentType.JSON)
+                .header("authorization", Service.gerarTokenUsuario("isabela.gomide@live.com", "lyzwwijvvst81y9"))
+                .body("{\n" +
+                        "  \"produtos\": [\n" +
+                        "    {\n" +
+                        "      \"idProduto\": \"a\",\n" +
+                        "      \"quantidade\": 2\n" +
+                        "    }\n" +
+                        "  ]\n" +
+                        "}")
+                .when()
+                .post("/carrinhos")
+                .then()
+                .assertThat()
+                .body("message", equalTo("Não é permitido ter mais de 1 carrinho"))
+                .statusCode(400)
+                .extract().response();
+        System.out.println(response.asString());
 
     }
 
