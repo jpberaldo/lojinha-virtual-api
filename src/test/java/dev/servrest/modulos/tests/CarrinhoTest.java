@@ -1,10 +1,12 @@
 package dev.servrest.modulos.tests;
 
 import dev.servrest.modulos.utils.Service;
+import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import org.junit.jupiter.api.*;
 
 import static io.restassured.RestAssured.*;
+import static org.hamcrest.Matchers.equalTo;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class CarrinhoTest {
@@ -63,6 +65,34 @@ public class CarrinhoTest {
                 .extract().response();
 
         System.out.println(response.asString());
+
+    }
+
+    @Test
+    @Order(4)
+    @DisplayName("Realizar cadastro de produto no carrinho com sucesso")
+    public void testRealizarCadastroDeProdutoNoCarrinhoComSucesso() {
+
+        this.response = given()
+                .contentType(ContentType.JSON)
+                .header("authorization", Service.gerarTokenUsuario("isabela.gomide@live.com", "lyzwwijvvst81y9"))
+                .body("{\n" +
+                        "  \"produtos\": [\n" +
+                        "    {\n" +
+                        "      \"idProduto\": \"BeeJh5lz3k6kSIzA\",\n" +
+                        "      \"quantidade\": 2\n" +
+                        "    }\n" +
+                        "  ]\n" +
+                        "}")
+                .when()
+                .post("/carrinhos")
+                .then()
+                .assertThat()
+                .body("message", equalTo("Cadastro realizado com sucesso"))
+                .statusCode(201)
+                .extract().response();
+        System.out.println(response.asString());
+
 
     }
 
