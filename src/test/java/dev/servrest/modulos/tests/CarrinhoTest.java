@@ -5,7 +5,12 @@ import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import org.junit.jupiter.api.*;
 
-import static io.restassured.RestAssured.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.equalTo;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
@@ -73,17 +78,19 @@ public class CarrinhoTest {
     @DisplayName("Realizar cadastro de produto no carrinho com sucesso")
     public void testRealizarCadastroDeProdutoNoCarrinhoComSucesso() {
 
+        List<Map<String, Object>> produtos = new ArrayList<>();
+        Map<String, Object> produto = new HashMap<>();
+        produto.put("idProduto", Service.gerarProdutoId(8));
+        produto.put("quantidade", 5);
+        produtos.add(produto);
+
+        Map<String, Object> body = new HashMap<>();
+        body.put("produtos", produtos);
+
         this.response = given()
                 .contentType(ContentType.JSON)
                 .header("authorization", Service.gerarTokenUsuario("isabela.gomide@live.com", "lyzwwijvvst81y9"))
-                .body("{\n" +
-                        "  \"produtos\": [\n" +
-                        "    {\n" +
-                        "      \"idProduto\": \"BeeJh5lz3k6kSIzA\",\n" +
-                        "      \"quantidade\": 2\n" +
-                        "    }\n" +
-                        "  ]\n" +
-                        "}")
+                .body(body)
                 .when()
                 .post("/carrinhos")
                 .then()
