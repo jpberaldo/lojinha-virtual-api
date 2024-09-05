@@ -129,4 +129,33 @@ public class CarrinhoTest {
 
     }
 
+    @Test
+    @Order(6)
+    @DisplayName("Não permitir cadastrar 2 carrinhos para 1 cliente")
+    public void testNaoPermitirCadastrarDoisCarrinhosParaCliente() {
+
+        List<Map<String, Object>> produtos = new ArrayList<>();
+        Map<String, Object> produto = new HashMap<>();
+        produto.put("idProduto", Service.gerarProdutoId(5));
+        produto.put("quantidade", 5);
+        produtos.add(produto);
+
+        Map<String, Object> body = new HashMap<>();
+        body.put("produtos", produtos);
+
+        this.response = given()
+                .contentType(ContentType.JSON)
+                .header("authorization", Service.gerarTokenUsuario("test@emailnovo.com", "teste"))
+                .body(body)
+                .when()
+                .post("/carrinhos")
+                .then()
+                .assertThat()
+                .body("message", equalTo("Não é permitido ter mais de 1 carrinho"))
+                .statusCode(400)
+                .extract().response();
+        System.out.println(response.asString());
+
+    }
+
 }
