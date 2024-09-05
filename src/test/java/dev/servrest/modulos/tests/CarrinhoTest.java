@@ -158,4 +158,38 @@ public class CarrinhoTest {
 
     }
 
+    @Test
+    @Order(4)
+    @DisplayName("Realizar cadastro de 2 produtos ou mais no carrinho com sucesso")
+    public void testRealizarCadastroDeDoisProdutosOuMaisNoCarrinhoComSucesso() {
+
+        List<Map<String, Object>> produtos = new ArrayList<>();
+        Map<String, Object> produto = new HashMap<>();
+        produto.put("idProduto", Service.gerarProdutoId(8));
+        produto.put("quantidade", 5);
+        produtos.add(produto);
+
+        Map<String, Object> produto2 = new HashMap<>();
+        produto2.put("idProduto", Service.gerarProdutoId(3));
+        produto2.put("quantidade", 79);
+        produtos.add(produto2);
+
+        Map<String, Object> body = new HashMap<>();
+        body.put("produtos", produtos);
+
+        this.response = given()
+                .contentType(ContentType.JSON)
+                .header("authorization", Service.gerarTokenUsuario("teste@emailtestes.com", "teste"))
+                .body(body)
+                .when()
+                .post("/carrinhos")
+                .then()
+                .assertThat()
+                .body("message", equalTo("Cadastro realizado com sucesso"))
+                .statusCode(201)
+                .extract().response();
+        System.out.println(response.asString());
+
+    }
+
 }
