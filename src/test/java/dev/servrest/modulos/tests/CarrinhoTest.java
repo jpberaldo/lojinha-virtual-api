@@ -192,4 +192,31 @@ public class CarrinhoTest {
 
     }
 
+    @Test
+    @Order(8)
+    @DisplayName("Validar mensagem de quando produto nao é encontrado")
+    public void testNaoValidarMsgDeProdutoNaoEncontrado() {
+
+        this.response = given()
+                .contentType(ContentType.JSON)
+                .header("authorization", Service.gerarTokenUsuario("teste@emailnovo.com", "teste"))
+                .body("{\n" +
+                        "  \"produtos\": [\n" +
+                        "    {\n" +
+                        "      \"idProduto\": \"a\",\n" +
+                        "      \"quantidade\": 1\n" +
+                        "    }\n" +
+                        "  ]\n" +
+                        "}")
+                .when()
+                .post("/carrinhos")
+                .then()
+                .assertThat()
+                .body("message", equalTo("Produto não encontrado"))
+                .statusCode(400)
+                .extract().response();
+        System.out.println(response.asString());
+
+    }
+
 }
