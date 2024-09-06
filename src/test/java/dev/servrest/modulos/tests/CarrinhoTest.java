@@ -159,7 +159,7 @@ public class CarrinhoTest {
     }
 
     @Test
-    @Order(4)
+    @Order(7)
     @DisplayName("Realizar cadastro de 2 produtos ou mais no carrinho com sucesso")
     public void testRealizarCadastroDeDoisProdutosOuMaisNoCarrinhoComSucesso() {
 
