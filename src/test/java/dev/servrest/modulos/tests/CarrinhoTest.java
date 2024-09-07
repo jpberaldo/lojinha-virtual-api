@@ -219,4 +219,23 @@ public class CarrinhoTest {
 
     }
 
+    @Test
+    @Order(9)
+    @DisplayName("Buscar carrinho com id válido")
+    public void testBuscarCarrinhoComIdValido() {
+
+        this.response = given()
+                .pathParam("_id", Service.selecionarCarrinho(0))
+                .contentType(ContentType.JSON)
+                .when()
+                .get("/carrinhos/{_id}")
+                .then()
+                .assertThat()
+                .statusCode(200)
+                .extract().response();
+
+        System.out.println(response.asString());
+
+    }
+
 }
