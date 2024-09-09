@@ -238,4 +238,24 @@ public class CarrinhoTest {
 
     }
 
+    @Test
+    @Order(10)
+    @DisplayName("Buscar carrinho com id inválido")
+    public void testBuscarCarrinhoComIdInvalido() {
+
+        this.response = given()
+                .pathParam("_id", Service.selecionarCarrinho(0) + "a")
+                .contentType(ContentType.JSON)
+                .when()
+                .get("/carrinhos/{_id}")
+                .then()
+                .assertThat()
+                .statusCode(400)
+                .body("message", equalTo("Carrinho não encontrado"))
+                .extract().response();
+
+        System.out.println(response.asString());
+
+    }
+
 }
