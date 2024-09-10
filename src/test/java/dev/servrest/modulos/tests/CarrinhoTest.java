@@ -258,4 +258,24 @@ public class CarrinhoTest {
 
     }
 
+    @Test
+    @Order(11)
+    @DisplayName("Excluir carrinho com sucesso")
+    public void testExcluirCarrinhoComSucesso() {
+
+        this.response = given()
+                .contentType(ContentType.JSON)
+                .header("authorization", Service.gerarTokenUsuario("teste@emailtestes.com", "teste"))
+                .when()
+                .delete("/carrinhos/concluir-compra")
+                .then()
+                .assertThat()
+                .statusCode(200)
+                .body("message", equalTo("Registro excluído com sucesso"))
+                .extract().response();
+
+        System.out.println(response.asString());
+
+    }
+
 }
