@@ -23,6 +23,7 @@ public class CadastroTest {
     Faker dados = new Faker(new Locale("pt-BR"));
     private String NOME_RANDOMICO = setDados(dados.name().fullName());
     private String SENHA_RANDOMICA = setDados(dados.internet().password());
+    private String EMAIL_RANDOMICO = setDados(dados.internet().emailAddress());
 
     @BeforeEach
     public void beforeEach() {
@@ -58,11 +59,7 @@ public class CadastroTest {
 
         response = given()
                 .contentType(ContentType.JSON)
-                .body(CadastroData.informarDadosDeCadastro(
-                        setDados(dados.name().fullName()),
-                        setDados(dados.internet().emailAddress()),
-                        setDados(dados.internet().password()),
-                        "true"))
+                .body(CadastroData.informarDadosDeCadastro(NOME_RANDOMICO, EMAIL_RANDOMICO, SENHA_RANDOMICA, "true"))
                 .when()
                 .post("/usuarios")
                 .then()
@@ -71,7 +68,7 @@ public class CadastroTest {
                 .body("message", equalTo("Cadastro realizado com sucesso"))
                 .extract().response();
 
-        System.out.println("Dados do cadastro" + getDados());
+        System.out.println("Dados do cadastro: " + NOME_RANDOMICO + " /// " + EMAIL_RANDOMICO + " /// " +SENHA_RANDOMICA);
         System.out.println(response.asString());
 
     }
@@ -111,11 +108,7 @@ public class CadastroTest {
 
         Response res = given()
                 .contentType(ContentType.JSON)
-                .body(CadastroData.informarDadosDeCadastro(
-                        setDados(dados.name().fullName()),
-                        setDados(dados.internet().emailAddress()),
-                        setDados(dados.internet().password()),
-                        "true"))
+                .body(CadastroData.informarDadosDeCadastro(NOME_RANDOMICO, EMAIL_RANDOMICO, SENHA_RANDOMICA, "true"))
                 .when()
                 .put("/usuarios");
 
