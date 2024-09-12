@@ -229,8 +229,8 @@ public class UsuarioTest {
 
     @Test
     @Order(12)
-    @DisplayName("Verificar e listar se usuário for administrador")
-    public void testVerificarEListarSeUsuarioEAdministrador() {
+    @DisplayName("Filtrar apenas usuários que não são adminitradores")
+    public void testFiltrarApenasUsuariosNaoAdmin() {
 
         this.response = given()
                 .queryParam("administrador", "false")
@@ -238,7 +238,7 @@ public class UsuarioTest {
                 .get("/usuarios")
                 .then()
                 .statusCode(200)
-                .body("usuarios.nome", hasItem("Beltrano da Silva"))
+                .body("usuarios.nome", hasItem("Teste alteracao"))
                 .extract().response();
 
         System.out.println(response.asString());
@@ -247,6 +247,24 @@ public class UsuarioTest {
 
     @Test
     @Order(13)
+    @DisplayName("Filtrar apenas usuários que são adminitradores")
+    public void testFiltrarApenasUsuariosAdmin() {
+
+        this.response = given()
+                .queryParam("administrador", "true")
+                .when()
+                .get("/usuarios")
+                .then()
+                .statusCode(200)
+                .body("usuarios.nome", hasItem("Fulano da Silva"))
+                .extract().response();
+
+        System.out.println(response.asString());
+
+    }
+
+    @Test
+    @Order(14)
     @DisplayName("Fazer busca de usuario por 2 ou mais filtros")
     public void testBuscarUsuarioPorDoisOuMaisFiltros() {
 
@@ -269,12 +287,12 @@ public class UsuarioTest {
     }
 
     @Test
-    @Order(14)
+    @Order(15)
     @DisplayName("Buscar usuário cadastrado por nome não encontrado")
     public void testBuscarUsuarioFiltrandoPorNomeNaoEncontrado() {
 
         this.response = given()
-                .queryParam("nome", "Teste")
+                .queryParam("nome", "Aleatorio")
                 .when()
                 .get("/usuarios")
                 .then()
@@ -287,7 +305,7 @@ public class UsuarioTest {
     }
 
     @Test
-    @Order(15)
+    @Order(16)
     @DisplayName("Validar lista de usuários cadastrados de outro jeito")
     public void testValidarListaDeUsuariosCadastrados() {
 
@@ -306,7 +324,7 @@ public class UsuarioTest {
     }
 
     @Test
-    @Order(16)
+    @Order(17)
     @DisplayName("Editar dados de um usuário com sucesso")
     public void testEditarDadosDeUmUsuarioComSucesso(){
 
@@ -330,7 +348,7 @@ public class UsuarioTest {
     }
 
     @Test
-    @Order(17)
+    @Order(18)
     @DisplayName("Editar dados de um usuário com Id inválido")
     public void testEditarDadosDeUmUsuarioComIdInvalido(){
 
