@@ -21,6 +21,8 @@ public class CadastroTest {
 
     Response response;
     Faker dados = new Faker(new Locale("pt-BR"));
+    private String NOME_RANDOMICO = setDados(dados.name().fullName());
+    private String SENHA_RANDOMICA = setDados(dados.internet().password());
 
     @BeforeEach
     public void beforeEach() {
@@ -34,10 +36,7 @@ public class CadastroTest {
 
         this.response = given().
                 contentType(ContentType.JSON)
-                .body(CadastroData.informarDadosDeCadastro(
-                        setDados(dados.name().fullName()),
-                        EMAIL_REPETIDO,
-                        setDados(dados.internet().password()),
+                .body(CadastroData.informarDadosDeCadastro(NOME_RANDOMICO, EMAIL_REPETIDO, SENHA_RANDOMICA,
                         "true"))
                 .when()
                 .post("/usuarios")
@@ -47,7 +46,7 @@ public class CadastroTest {
                 .body("message", equalTo("Este email já está sendo usado"))
                 .extract().response();
 
-        System.out.println("Nome utilizado" + getDados());
+        System.out.println("Nome utilizado: " + NOME_RANDOMICO);
         System.out.println(response.asString());
 
     }

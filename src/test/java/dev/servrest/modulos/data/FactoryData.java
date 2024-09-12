@@ -1,7 +1,5 @@
 package dev.servrest.modulos.data;
 
-import com.github.javafaker.Faker;
-
 public class FactoryData {
 
     private static String dados;
