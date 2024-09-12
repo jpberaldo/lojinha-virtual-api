@@ -278,4 +278,44 @@ public class CarrinhoTest {
 
     }
 
+    @Test
+    @Order(12)
+    @DisplayName("Excluir carrinho sem sucesso, quando nao encontra carrinho para o usuário")
+    public void testExcluirCarrinhoSemSucesso() {
+
+        this.response = given()
+                .contentType(ContentType.JSON)
+                .header("authorization", Service.gerarTokenUsuario("test@emailnovo.com", "teste"))
+                .when()
+                .delete("/carrinhos/concluir-compra")
+                .then()
+                .assertThat()
+                .statusCode(200)
+                .body("message", equalTo("Não foi encontrado carrinho para esse usuário"))
+                .extract().response();
+
+        System.out.println(response.asString());
+
+    }
+
+    @Test
+    @Order(13)
+    @DisplayName("Excluir carrinho sem sucesso por conta do token invalido")
+    public void testExcluirCarrinhoSemSucessoComTokenInvalido() {
+
+        this.response = given()
+                .contentType(ContentType.JSON)
+                .header("authorization", Service.gerarTokenUsuario("test@emailnovo.com", "teste") + "a")
+                .when()
+                .delete("/carrinhos/concluir-compra")
+                .then()
+                .assertThat()
+                .statusCode(401)
+                .body("message", equalTo("Token de acesso ausente, inválido, expirado ou usuário do token não existe mais"))
+                .extract().response();
+
+        System.out.println(response.asString());
+
+    }
+
 }
