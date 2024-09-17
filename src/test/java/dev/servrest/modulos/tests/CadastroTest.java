@@ -1,17 +1,12 @@
 package dev.servrest.modulos.tests;
 
-import com.github.javafaker.Faker;
-
-import static dev.servrest.modulos.data.FactoryData.*;
-
 import dev.servrest.modulos.data.CadastroData;
 import dev.servrest.modulos.utils.Service;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import org.junit.jupiter.api.*;
 
-import java.util.Locale;
-
+import static dev.servrest.modulos.data.FactoryData.*;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.equalTo;
 
@@ -20,10 +15,6 @@ import static org.hamcrest.Matchers.equalTo;
 public class CadastroTest {
 
     Response response;
-    Faker dados = new Faker(new Locale("pt-BR"));
-    private String NOME_RANDOMICO = setDados(dados.name().fullName());
-    private String SENHA_RANDOMICA = setDados(dados.internet().password());
-    private String EMAIL_RANDOMICO = setDados(dados.internet().emailAddress());
 
     @BeforeEach
     public void beforeEach() {
@@ -37,8 +28,7 @@ public class CadastroTest {
 
         this.response = given().
                 contentType(ContentType.JSON)
-                .body(CadastroData.informarDadosDeCadastro(NOME_RANDOMICO, EMAIL_REPETIDO, SENHA_RANDOMICA,
-                        "true"))
+                .body(CadastroData.informarDadosDeCadastro(NOME_RANDOMICO, EMAIL_REPETIDO, SENHA_RANDOMICA, "true"))
                 .when()
                 .post("/usuarios")
                 .then()
@@ -68,7 +58,7 @@ public class CadastroTest {
                 .body("message", equalTo("Cadastro realizado com sucesso"))
                 .extract().response();
 
-        System.out.println("Dados do cadastro: " + NOME_RANDOMICO + " /// " + EMAIL_RANDOMICO + " /// " +SENHA_RANDOMICA);
+        System.out.println("Dados do cadastro: " + NOME_RANDOMICO + " /// " + EMAIL_RANDOMICO + " /// " + SENHA_RANDOMICA);
         System.out.println(response.asString());
 
     }
