@@ -186,7 +186,9 @@ public class UsuarioTest {
                 .when()
                 .get("/usuarios")
                 .then()
+                .assertThat()
                 .statusCode(200)
+                .body("usuarios.nome", hasItem("Fulano da Silva"))
                 .extract().response();
 
         System.out.println(response.asString());

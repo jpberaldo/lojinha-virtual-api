@@ -47,7 +47,7 @@ public class CadastroTest {
     @DisplayName("Cadastrar novo usuario com dados validos")
     public void testCadastrarNovoUsuarioComSucesso() {
 
-        response = given()
+        this.response = given()
                 .contentType(ContentType.JSON)
                 .body(CadastroData.informarDadosDeCadastro(NOME_RANDOMICO, EMAIL_RANDOMICO, SENHA_RANDOMICA, "true"))
                 .when()
