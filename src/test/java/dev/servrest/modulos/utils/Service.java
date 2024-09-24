@@ -46,9 +46,9 @@ public class Service {
     }
 
     public static String selecionarUltimoUsuario() {
-        List<String> userList = listaDeUsuarios();
-        if (!userList.isEmpty()) {
-            return userList.get(userList.size() - 1);
+        List<String> listaDeUsuarios = listaDeUsuarios();
+        if (!listaDeUsuarios.isEmpty()) {
+            return listaDeUsuarios.get(listaDeUsuarios.size() - 1);
         } else {
             return null;
         }
