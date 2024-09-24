@@ -232,12 +232,14 @@ public class ProdutoTest {
 
         given()
                 .pathParam("_id", Service.gerarProdutoId(0))
+                .contentType(ContentType.JSON)
+                .header("authorization", Service.gerarTokenUsuario("fulano@qa.com", "teste"))
                 .when()
                 .delete("/produtos/{_id}")
                 .then()
                 .assertThat()
-                .statusCode(200)
                 .body("message", equalTo("Registro excluído com sucesso"))
+                .statusCode(HttpStatus.SC_OK)
                 .log().all();
 
     }
@@ -251,7 +253,7 @@ public class ProdutoTest {
                 .pathParam("_id", Service.gerarProdutoId(0))
                 .contentType(ContentType.JSON)
                 .header("authorization", Service.gerarTokenUsuario("fulano@qa.com", "teste"))
-                .body(ProdutoData.cadastrarProduto("Teste T3", "Alterando descricao", 210, 10))
+                .body(ProdutoData.cadastrarProduto("Teste T4", "Alterando descricao", 210, 10))
                 .when()
                 .put("/produtos/{_id}")
                 .then()
