@@ -271,7 +271,7 @@ public class ProdutoTest {
         given()
                 .pathParam("_id", "0uxuPY0cbmQhpEz1")
                 .contentType(ContentType.JSON)
-                .header("authorization", userId)
+                .header("authorization", Service.gerarTokenUsuario("fulano@qa.com", "teste"))
                 .body(ProdutoData.cadastrarProduto("Logitech GPRO Purple Novo", "Mouse Alterado", 210, 5))
                 .when()
                 .put("/produtos/{_id}")
@@ -308,13 +308,12 @@ public class ProdutoTest {
 
     @Test
     @Order(12)
-    @DisplayName("Validar que nao permite alterar produto com token de usuário inválido")
+    @DisplayName("Validar que nao permite alterar produto com token do produto inválido")
     public void testAlterarNomeProdutoComTokenDeUsuarioInvalido() {
 
         given()
                 .pathParam("_id", "abc")
                 .contentType(ContentType.JSON)
-                .header("authorization", userId)
                 .body(ProdutoData.cadastrarProduto("Logitech GPRO Purple Novo", "Mouse Alterado", 210, 5))
                 .when()
                 .put("/produtos/{_id}")
