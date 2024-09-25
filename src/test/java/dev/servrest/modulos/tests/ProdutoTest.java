@@ -20,7 +20,6 @@ import static org.hamcrest.Matchers.equalTo;
 @DisplayName("Testes que validam a classe de Produto")
 public class ProdutoTest {
 
-    private String userId = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImZ1bGFub0BxYS5jb20iLCJwYXNzd29yZCI6InRlc3RlIiwiaWF0IjoxNzIzNDk1MzU4LCJleHAiOjE3MjM0OTU5NTh9.rAXikTgF333Ft_-g1tavN9kmcvSCAzXspRJFMzcIIpQ";
     Response response;
     Faker dados = new Faker(new Locale("pt-BR"));
 
