@@ -21,7 +21,6 @@ import static org.hamcrest.Matchers.equalTo;
 public class ProdutoTest {
 
     Response response;
-    Faker dados = new Faker(new Locale("pt-BR"));
 
     @BeforeEach
     public void beforeEach() {
@@ -68,7 +67,7 @@ public class ProdutoTest {
         Response response = given()
                 .contentType(ContentType.JSON)
                 .header("authorization", token.getToken())
-                .body(ProdutoData.cadastrarProduto(setDados(dados.food().dish()), "XXX", Integer.parseInt(setDados(String.valueOf(dados.random().nextInt(10000)))), 10))
+                .body(ProdutoData.cadastrarProduto("Teste", "AAA",100, 15))
                 .when()
                 .post("/produtos")
                 .then()
