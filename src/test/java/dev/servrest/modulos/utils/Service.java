@@ -1,5 +1,6 @@
 package dev.servrest.modulos.utils;
 
+import dev.servrest.modulos.data.FactoryData;
 import dev.servrest.modulos.data.UsuarioData;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
@@ -65,6 +66,22 @@ public class Service {
 
         String token = response.jsonPath().getString("authorization");
         return token;
+    }
+
+    public static String gerarNomeDeProdutoRandomico() {
+        return FactoryData.NOME_PRODUTO_RANDOMICO;
+    }
+
+    public static String gerarDescricaoRandomico() {
+        return FactoryData.DESCRICAO_PRODUTO_RANDOMICO;
+    }
+
+    public static int gerarValorProdutoRandomico() {
+        return FactoryData.VALOR;
+    }
+
+    public static int gerarQuantidadeProdutoRandomico() {
+        return FactoryData.VALOR;
     }
 
 
