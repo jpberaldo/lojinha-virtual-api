@@ -1,6 +1,5 @@
 package dev.servrest.modulos.tests;
 
-import com.github.javafaker.Faker;
 import dev.servrest.modulos.data.ProdutoData;
 import dev.servrest.modulos.data.UsuarioData;
 import dev.servrest.modulos.utils.Service;
@@ -10,9 +9,6 @@ import io.restassured.response.Response;
 import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.*;
 
-import java.util.Locale;
-
-import static dev.servrest.modulos.data.FactoryData.setDados;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.equalTo;
 
