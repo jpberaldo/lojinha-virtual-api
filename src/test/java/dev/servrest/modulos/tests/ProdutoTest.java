@@ -27,7 +27,7 @@ public class ProdutoTest {
     @Test
     @Order(1)
     @DisplayName("Exibir lista de produtos cadastrados")
-    public void testExibirListaDeUsuariosCadastrados() {
+    public void testExibirListaDeProdutosCadastrados() {
 
         this.response = given().
                 when().
@@ -60,7 +60,7 @@ public class ProdutoTest {
 
         System.out.println(token);
 
-        Response response = given()
+        this.response = given()
                 .contentType(ContentType.JSON)
                 .header("authorization", Service.gerarTokenUsuario("fulano@qa.com", "teste"))
                 .body(ProdutoData.cadastrarProduto(Service.gerarNomeDeProdutoRandomico(),
@@ -91,22 +91,22 @@ public class ProdutoTest {
                 .then()
                 .extract().path("authorization");
 
-        System.out.println(token);
+        Response gerarListaDeProdutos = given().when().get("/produtos").then().extract().response();
+        String produtoComNomeRepetido = gerarListaDeProdutos.jsonPath().getString("produtos[" + 0 + "].nome");
 
-//        Response response = given()
-//                .contentType(ContentType.JSON)
-//                .header("authorization", token)
-//                .body(ProdutoData.cadastrarProduto(setDados(dados.name().fullName()),
-//                        setDados(dados.music().genre()), 150, 10))
-//                .when()
-//                .post("/produtos")
-//                .then()
-//                .assertThat()
-//                .body("message", equalTo("Já existe produto com esse nome"))
-//                .statusCode(400)
-//                .extract().response();
+        this.response = given()
+                .contentType(ContentType.JSON)
+                .header("authorization", token)
+                .body(ProdutoData.cadastrarProduto(produtoComNomeRepetido, Service.gerarDescricaoRandomico(), 150, 10))
+                .when()
+                .post("/produtos")
+                .then()
+                .assertThat()
+                .body("message", equalTo("Já existe produto com esse nome"))
+                .statusCode(400)
+                .extract().response();
 
-        System.out.println(response);
+        System.out.println(response.asString());
 
     }
 
