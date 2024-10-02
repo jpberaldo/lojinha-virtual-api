@@ -2,6 +2,7 @@ package dev.servrest.modulos.utils;
 
 import dev.servrest.modulos.data.FactoryData;
 import dev.servrest.modulos.data.UsuarioData;
+import dev.servrest.modulos.pojo.UsuarioPojo;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 
@@ -39,15 +40,12 @@ public class Service {
         return carrinhoSelecionado;
     }
 
-    public static List<String> listaDeUsuarios() {
-
-        response = given().when().get("/usuarios").then().extract().response();
-        List<String> listaUsuarios = response.jsonPath().getList("usuarios._id");
-        return listaUsuarios;
+    public static List<String> gerarlistaDeIDUsuarios() {
+        return UsuarioPojo.listaDeIDUsuarios();
     }
 
     public static String selecionarUltimoUsuario() {
-        List<String> listaDeUsuarios = listaDeUsuarios();
+        List<String> listaDeUsuarios = gerarlistaDeIDUsuarios();
         if (!listaDeUsuarios.isEmpty()) {
             return listaDeUsuarios.get(listaDeUsuarios.size() - 1);
         } else {

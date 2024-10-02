@@ -39,6 +39,12 @@ public class UsuarioTest {
                 .statusCode(200)
                 .extract().response();
 
+        int qtdUsuarios = response.jsonPath().get("quantidade");
+        if (qtdUsuarios != 0) {
+            System.out.println("Voce tem: " + qtdUsuarios + " usuarios cadastrados");
+        } else {
+            System.out.println("Voce nao tem usuarios cadastrados");
+        }
         System.out.println(response.asString());
 
     }
@@ -328,7 +334,7 @@ public class UsuarioTest {
     @Test
     @Order(17)
     @DisplayName("Editar dados de um usuário com sucesso")
-    public void testEditarDadosDeUmUsuarioComSucesso(){
+    public void testEditarDadosDeUmUsuarioComSucesso() {
 
         response = given()
                 .pathParam("_id", "3voIW0eX25UpduaG")
@@ -352,7 +358,7 @@ public class UsuarioTest {
     @Test
     @Order(18)
     @DisplayName("Editar dados de um usuário com Id inválido")
-    public void testEditarDadosDeUmUsuarioComIdInvalido(){
+    public void testEditarDadosDeUmUsuarioComIdInvalido() {
 
         response = given()
                 .pathParam("_id", "xxx")
@@ -372,6 +378,5 @@ public class UsuarioTest {
 
         System.out.println(response.asString());
     }
-
 
 }
