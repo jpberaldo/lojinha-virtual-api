@@ -36,8 +36,7 @@ public class Service {
 
     public static String selecionarCarrinho(int carrinho) {
         response = given().when().get("/carrinhos").then().extract().response();
-        String carrinhoSelecionado = response.jsonPath().getString("carrinhos[" + carrinho + "]._id");
-        return carrinhoSelecionado;
+        return response.jsonPath().getString("carrinhos[" + carrinho + "]._id");
     }
 
     public static List<String> gerarlistaDeIDUsuarios() {
