@@ -59,8 +59,7 @@ public class Service {
                 .post("/login")
                 .then().extract().response();
 
-        String token = response.jsonPath().getString("authorization");
-        return token;
+        return response.jsonPath().getString("authorization");
     }
 
     public static String gerarNomeDeProdutoRandomico() {
