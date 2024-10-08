@@ -228,7 +228,7 @@ public class ProdutoTest {
     public void testExcluirUmProdutoValido() {
 
         given()
-                .pathParam("_id", Service.gerarProdutoId(0))
+                .pathParam("_id", Service.selecionarUltimoProduto())
                 .contentType(ContentType.JSON)
                 .header("authorization", Service.gerarTokenUsuario("fulano@qa.com", "teste"))
                 .when()
@@ -247,17 +247,17 @@ public class ProdutoTest {
     public void testAlterarNomeDeProdutoComSucesso() {
 
         given()
-                .pathParam("_id", Service.gerarProdutoId(0))
+                .pathParam("_id", Service.selecionarUltimoProduto())
                 .contentType(ContentType.JSON)
                 .header("authorization", Service.gerarTokenUsuario("fulano@qa.com", "teste"))
-                .body(ProdutoData.cadastrarProduto("Teste T4", "Alterando descricao", 210, 10))
+                .body(ProdutoData.cadastrarProduto(Service.gerarNomeDeProdutoRandomico() + "1", Service.gerarDescricaoRandomico(), 150, 10))
                 .when()
                 .put("/produtos/{_id}")
                 .then()
                 .assertThat()
-                .statusCode(HttpStatus.SC_OK)
-                .and()
                 .body("message", equalTo("Registro alterado com sucesso"))
+                .and()
+                .statusCode(HttpStatus.SC_OK)
                 .log().all();
 
     }

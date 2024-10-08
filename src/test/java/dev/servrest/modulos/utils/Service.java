@@ -1,10 +1,9 @@
 package dev.servrest.modulos.utils;
 
 import dev.servrest.modulos.data.FactoryData;
-import dev.servrest.modulos.data.UsuarioData;
 import dev.servrest.modulos.pojo.CarrinhoPojo;
+import dev.servrest.modulos.pojo.ProdutoPojo;
 import dev.servrest.modulos.pojo.UsuarioPojo;
-import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 
 import java.util.List;
@@ -24,8 +23,11 @@ public class Service {
     }
 
     public static String gerarProdutoId(int produto) {
-        response = given().when().get("/produtos").then().extract().response();
-        return response.jsonPath().getString("produtos[" + produto + "]._id");
+        return ProdutoPojo.gerarProdutoId(produto);
+    }
+
+    public static String selecionarUltimoProduto(){
+        return ProdutoPojo.gerarDadosParaSelecionarUltimoProduto();
     }
 
     public static String selecionarUsuario(int usuario) {
