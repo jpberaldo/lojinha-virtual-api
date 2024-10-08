@@ -2,6 +2,7 @@ package dev.servrest.modulos.utils;
 
 import dev.servrest.modulos.data.FactoryData;
 import dev.servrest.modulos.data.UsuarioData;
+import dev.servrest.modulos.pojo.CarrinhoPojo;
 import dev.servrest.modulos.pojo.UsuarioPojo;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
@@ -33,8 +34,7 @@ public class Service {
     }
 
     public static String selecionarCarrinho(int carrinho) {
-        response = given().when().get("/carrinhos").then().extract().response();
-        return response.jsonPath().getString("carrinhos[" + carrinho + "]._id");
+        return CarrinhoPojo.gerarDadosDoCarrinhoDeProdutos(carrinho);
     }
 
     public static List<String> gerarlistaDeIDUsuarios() {
