@@ -1,5 +1,7 @@
 package dev.servrest.modulos.pojo;
 
+import dev.servrest.modulos.data.UsuarioData;
+import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 
 import java.util.List;
@@ -29,9 +31,25 @@ public class UsuarioPojo {
     }
 
     public static List<String> listaDeIDUsuarios() {
-
         response = given().when().get("/usuarios").then().extract().response();
-        List<String> listaUsuarios = response.jsonPath().getList("usuarios._id");
-        return listaUsuarios;
+        return response.jsonPath().getList("usuarios._id");
     }
+
+    public static String gerarDadosParaSelecaoDeUsuario(int usuario) {
+        response = given().when().get("/usuarios").then().extract().response();
+        return response.jsonPath().getString("usuarios[" + usuario + "]._id");
+    }
+
+    public static String gerarDadosDeTokenDoUsuario(String email, String senha) {
+
+        response = given()
+                .contentType(ContentType.JSON)
+                .body(UsuarioData.realizarLoginComUsuario(email, senha))
+                .when()
+                .post("/login")
+                .then().extract().response();
+
+        return response.jsonPath().getString("authorization");
+    }
+
 }

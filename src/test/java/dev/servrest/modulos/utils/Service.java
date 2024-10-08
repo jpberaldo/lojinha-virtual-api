@@ -29,20 +29,15 @@ public class Service {
     }
 
     public static String selecionarUsuario(int usuario) {
-        response = given().when().get("/usuarios").then().extract().response();
-        return response.jsonPath().getString("usuarios[" + usuario + "]._id");
+        return UsuarioPojo.gerarDadosParaSelecaoDeUsuario(usuario);
     }
 
     public static String selecionarCarrinho(int carrinho) {
         return CarrinhoPojo.gerarDadosDoCarrinhoDeProdutos(carrinho);
     }
 
-    public static List<String> gerarlistaDeIDUsuarios() {
-        return UsuarioPojo.listaDeIDUsuarios();
-    }
-
     public static String selecionarUltimoUsuario() {
-        List<String> listaDeUsuarios = gerarlistaDeIDUsuarios();
+        List<String> listaDeUsuarios = UsuarioPojo.listaDeIDUsuarios();
         if (!listaDeUsuarios.isEmpty()) {
             return listaDeUsuarios.get(listaDeUsuarios.size() - 1);
         } else {
@@ -51,15 +46,7 @@ public class Service {
     }
 
     public static String gerarTokenUsuario(String email, String senha) {
-
-        response = given()
-                .contentType(ContentType.JSON)
-                .body(UsuarioData.realizarLoginComUsuario(email, senha))
-                .when()
-                .post("/login")
-                .then().extract().response();
-
-        return response.jsonPath().getString("authorization");
+        return UsuarioPojo.gerarDadosDeTokenDoUsuario(email, senha);
     }
 
     public static String gerarNomeDeProdutoRandomico() {
@@ -77,6 +64,5 @@ public class Service {
     public static int gerarQuantidadeProdutoRandomico() {
         return FactoryData.VALOR;
     }
-
 
 }
