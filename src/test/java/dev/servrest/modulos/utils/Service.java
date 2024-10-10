@@ -5,8 +5,6 @@ import dev.servrest.modulos.pojo.CarrinhoPojo;
 import dev.servrest.modulos.pojo.ProdutoPojo;
 import dev.servrest.modulos.pojo.UsuarioPojo;
 
-import java.util.List;
-
 import static io.restassured.RestAssured.baseURI;
 import static io.restassured.RestAssured.port;
 
@@ -36,12 +34,7 @@ public class Service {
     }
 
     public static String selecionarUltimoUsuario() {
-        List<String> listaDeUsuarios = UsuarioPojo.listaDeIDUsuarios();
-        if (!listaDeUsuarios.isEmpty()) {
-            return listaDeUsuarios.get(listaDeUsuarios.size() - 1);
-        } else {
-            return null;
-        }
+       return UsuarioPojo.fazerSelecaoDoUltimoUsuario();
     }
 
     public static String gerarTokenUsuario(String email, String senha) {

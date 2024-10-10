@@ -40,6 +40,15 @@ public class UsuarioPojo {
         return response.jsonPath().getString("usuarios[" + usuario + "]._id");
     }
 
+    public static String fazerSelecaoDoUltimoUsuario() {
+        List<String> listaDeUsuarios = listaDeIDUsuarios();
+        if (!listaDeUsuarios.isEmpty()) {
+            return listaDeUsuarios.get(listaDeUsuarios.size() - 1);
+        } else {
+            return null;
+        }
+    }
+
     public static String gerarDadosDeTokenDoUsuario(String email, String senha) {
 
         response = given()
