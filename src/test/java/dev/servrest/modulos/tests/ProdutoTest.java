@@ -3,7 +3,6 @@ package dev.servrest.modulos.tests;
 import dev.servrest.modulos.data.ProdutoData;
 import dev.servrest.modulos.data.UsuarioData;
 import dev.servrest.modulos.utils.Service;
-import dev.servrest.modulos.utils.Token;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import org.apache.http.HttpStatus;
@@ -44,21 +43,6 @@ public class ProdutoTest {
     @Order(2)
     @DisplayName("Cadastrar novo produto válido")
     public void testCadastrarNovoProdutoValido() {
-
-//        String token = given().
-//                contentType(ContentType.JSON)
-//                .body("{\n" +
-//                        "  \"email\": \"fulano@qa.com\",\n" +
-//                        "  \"password\": \"teste\"\n" +
-//                        "}")
-//                .when()
-//                .post("/login")
-//                .then()
-//                .extract().path("authorization");
-
-        Token token = Token.VALIDO;
-
-        System.out.println(token);
 
         this.response = given()
                 .contentType(ContentType.JSON)
