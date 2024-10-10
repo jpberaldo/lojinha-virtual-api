@@ -4,16 +4,13 @@ import dev.servrest.modulos.data.FactoryData;
 import dev.servrest.modulos.pojo.CarrinhoPojo;
 import dev.servrest.modulos.pojo.ProdutoPojo;
 import dev.servrest.modulos.pojo.UsuarioPojo;
-import io.restassured.response.Response;
 
 import java.util.List;
 
-import static io.restassured.RestAssured.*;
-import static io.restassured.RestAssured.given;
+import static io.restassured.RestAssured.baseURI;
+import static io.restassured.RestAssured.port;
 
 public class Service {
-
-    static Response response;
 
     public static void configurarEnderecoDaRequisicaoChamada() {
 
