@@ -61,4 +61,26 @@ public class UsuarioPojo {
         return response.jsonPath().getString("authorization");
     }
 
+    public static String pegarEmailDoUltimoUsuarioCadastrado() {
+
+        response = given().when().get("/usuarios").then().extract().response();
+        List<String> listaDeEmail = response.jsonPath().getList("usuarios.email");;
+        if (!listaDeEmail.isEmpty()) {
+            return listaDeEmail.get(listaDeEmail.size() - 1);
+        } else {
+            return null;
+        }
+    }
+
+    public static String pegarSenhaDoUltimoUsuarioCadastrado() {
+
+        response = given().when().get("/usuarios").then().extract().response();
+        List<String> listaDeEmail = response.jsonPath().getList("usuarios.password");;
+        if (!listaDeEmail.isEmpty()) {
+            return listaDeEmail.get(listaDeEmail.size() - 1);
+        } else {
+            return null;
+        }
+    }
+
 }

@@ -1,5 +1,6 @@
 package dev.servrest.modulos.tests;
 
+import dev.servrest.modulos.pojo.UsuarioPojo;
 import dev.servrest.modulos.utils.Service;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
@@ -89,7 +90,8 @@ public class CarrinhoTest {
 
         this.response = given()
                 .contentType(ContentType.JSON)
-                .header("authorization", Service.gerarTokenUsuario("isabela.gomide@live.com", "lyzwwijvvst81y9"))
+                .header("authorization", Service.gerarTokenUsuario(Service.selecionarEmailDoUltimoUsuarioCadastrado(),
+                        Service.selecionarSenhaDoUltimoUsuarioCadastrado()))
                 .body(body)
                 .when()
                 .post("/carrinhos")
@@ -98,6 +100,7 @@ public class CarrinhoTest {
                 .body("message", equalTo("Cadastro realizado com sucesso"))
                 .statusCode(201)
                 .extract().response();
+
         System.out.println(response.asString());
 
     }

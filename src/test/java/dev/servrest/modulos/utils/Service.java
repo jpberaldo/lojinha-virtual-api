@@ -57,8 +57,12 @@ public class Service {
         return FactoryData.VALOR;
     }
 
-    public static String selecionarNomeDoUltimoUsuarioCadastrado(){
-        return UsuarioPojo.gerarDadosDoNomeDoUltimoUsuario();
+    public static String selecionarEmailDoUltimoUsuarioCadastrado(){
+        return UsuarioPojo.pegarEmailDoUltimoUsuarioCadastrado();
+    }
+
+    public static String selecionarSenhaDoUltimoUsuarioCadastrado(){
+        return UsuarioPojo.pegarSenhaDoUltimoUsuarioCadastrado();
     }
 
 }
