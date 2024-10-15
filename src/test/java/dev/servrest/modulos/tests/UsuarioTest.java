@@ -42,7 +42,7 @@ public class UsuarioTest {
         int qtdUsuarios = response.jsonPath().get("quantidade");
         Assertions.assertNotEquals(0, qtdUsuarios);
         System.out.println("Voce tem: " + qtdUsuarios + " usuarios cadastrados");
-
+        System.out.println("Adicionando retorno da response \n===========================" + "\n" + response.asString());
     }
 
     @Test

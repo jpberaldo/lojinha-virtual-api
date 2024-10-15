@@ -38,6 +38,7 @@ public class ProdutoTest {
         int qtdProdutos = response.jsonPath().get("quantidade");
         Assertions.assertNotEquals(0, qtdProdutos);
         System.out.println("Voce tem: " + qtdProdutos + " produtos cadastrados");
+        System.out.println("Adicionando retorno da response \n===========================" + "\n" + response.asString());
 
     }
 
