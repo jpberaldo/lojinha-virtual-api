@@ -7,7 +7,7 @@ import java.util.Locale;
 public class FactoryData {
 
     private static String dados;
-    public static final String EMAIL_REPETIDO = "beltrano@qa.com.br";
+    public static final String EMAIL_REPETIDO = "fulano@qa.com";
     static Faker data = new Faker(new Locale("pt-BR"));
     public static String NOME_RANDOMICO = setDados(data.name().fullName());
     public static String SENHA_RANDOMICA = setDados(data.internet().password());
