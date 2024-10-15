@@ -35,7 +35,9 @@ public class ProdutoTest {
                 .statusCode(200)
                 .extract().response();
 
-        System.out.println(response.asString());
+        int qtdProdutos = response.jsonPath().get("quantidade");
+        Assertions.assertNotEquals(0, qtdProdutos);
+        System.out.println("Voce tem: " + qtdProdutos + " produtos cadastrados");
 
     }
 

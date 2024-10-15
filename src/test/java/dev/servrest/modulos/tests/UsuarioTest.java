@@ -40,12 +40,8 @@ public class UsuarioTest {
                 .extract().response();
 
         int qtdUsuarios = response.jsonPath().get("quantidade");
-        if (qtdUsuarios != 0) {
-            System.out.println("Voce tem: " + qtdUsuarios + " usuarios cadastrados");
-        } else {
-            System.out.println("Voce nao tem usuarios cadastrados");
-        }
-        System.out.println(response.asString());
+        Assertions.assertNotEquals(0, qtdUsuarios);
+        System.out.println("Voce tem: " + qtdUsuarios + " usuarios cadastrados");
 
     }
 
