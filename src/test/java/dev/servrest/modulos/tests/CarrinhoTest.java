@@ -35,6 +35,9 @@ public class CarrinhoTest {
                 .statusCode(200)
                 .extract().response();
 
+        int qtdDeCarrinhos = response.jsonPath().get("quantidade");
+        Assertions.assertNotEquals(0, qtdDeCarrinhos);
+        System.out.println("Voce tem: " + qtdDeCarrinhos + " de carrinhos cadastrados");
         System.out.println(response.asString());
 
     }
