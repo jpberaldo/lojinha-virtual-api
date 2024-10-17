@@ -1,6 +1,5 @@
 package dev.servrest.modulos.tests;
 
-import dev.servrest.modulos.pojo.UsuarioPojo;
 import dev.servrest.modulos.utils.Service;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
