@@ -16,10 +16,6 @@ public class FactoryData {
     public static String DESCRICAO_PRODUTO_RANDOMICO = setDados(data.animal().name());
     public static int VALOR = Integer.parseInt(setDados(String.valueOf(data.random().nextInt(50000))));
 
-    public static String getDados() {
-        return dados;
-    }
-
     public static String setDados(String dado) {
         dados = dado;
         return dados;
