@@ -1,5 +1,6 @@
 package dev.servrest.modulos.tests;
 
+import dev.servrest.modulos.pojo.UsuarioPojo;
 import dev.servrest.modulos.utils.Service;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
@@ -83,13 +84,14 @@ public class CarrinhoTest {
 
         List<Map<String, Object>> produtos = new ArrayList<>();
         Map<String, Object> produto = new HashMap<>();
-        produto.put("idProduto", Service.gerarProdutoId(8));
-        produto.put("quantidade", 5);
+        produto.put("idProduto", Service.selecionarUltimoProduto());
+        produto.put("quantidade", 1);
         produtos.add(produto);
 
         Map<String, Object> body = new HashMap<>();
         body.put("produtos", produtos);
 
+        System.out.println(body);
         this.response = given()
                 .contentType(ContentType.JSON)
                 .header("authorization", Service.gerarTokenUsuario(Service.selecionarEmailDoUltimoUsuarioCadastrado(),
@@ -149,8 +151,8 @@ public class CarrinhoTest {
         body.put("produtos", produtos);
 
         this.response = given()
+                .header("authorization", Service.selecionarUltimoUsuario())
                 .contentType(ContentType.JSON)
-                .header("authorization", Service.gerarTokenUsuario("test@emailnovo.com", "teste"))
                 .body(body)
                 .when()
                 .post("/carrinhos")
@@ -270,7 +272,7 @@ public class CarrinhoTest {
 
         this.response = given()
                 .contentType(ContentType.JSON)
-                .header("authorization", Service.gerarTokenUsuario("teste@emailtestes.com", "teste"))
+                .header("authorization", UsuarioPojo.gerarDadosDeTokenDoUsuario(Service.selecionarEmailDoUltimoUsuarioCadastrado(), Service.selecionarSenhaDoUltimoUsuarioCadastrado()))
                 .when()
                 .delete("/carrinhos/concluir-compra")
                 .then()
