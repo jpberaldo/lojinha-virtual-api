@@ -78,7 +78,7 @@ public class CarrinhoTest {
     }
 
     @Test
-    @Order(4)
+    @Order(6)
     @DisplayName("Realizar cadastro de produto no carrinho com sucesso")
     public void testRealizarCadastroDeProdutoNoCarrinhoComSucesso() {
 
@@ -137,7 +137,7 @@ public class CarrinhoTest {
     }
 
     @Test
-    @Order(6)
+    @Order(11)
     @DisplayName("Não permitir cadastrar 2 carrinhos para 1 cliente")
     public void testNaoPermitirCadastrarDoisCarrinhosParaCliente() {
 
@@ -266,7 +266,7 @@ public class CarrinhoTest {
     }
 
     @Test
-    @Order(11)
+    @Order(4)
     @DisplayName("Excluir carrinho com sucesso")
     public void testExcluirCarrinhoComSucesso() {
 
@@ -292,7 +292,7 @@ public class CarrinhoTest {
 
         this.response = given()
                 .contentType(ContentType.JSON)
-                .header("authorization", Service.gerarTokenUsuario("test@emailnovo.com", "teste"))
+                .header("authorization", Service.gerarTokenUsuario("cesar.paes@gmail.com", "ak81ne6e29"))
                 .when()
                 .delete("/carrinhos/concluir-compra")
                 .then()
