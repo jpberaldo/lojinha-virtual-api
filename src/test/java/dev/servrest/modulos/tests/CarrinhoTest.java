@@ -151,8 +151,8 @@ public class CarrinhoTest {
         body.put("produtos", produtos);
 
         this.response = given()
-                .header("authorization", Service.selecionarUltimoUsuario())
                 .contentType(ContentType.JSON)
+                .header("authorization", Service.gerarTokenUsuario(Service.selecionarEmailDoUltimoUsuarioCadastrado(), Service.selecionarSenhaDoUltimoUsuarioCadastrado()))
                 .body(body)
                 .when()
                 .post("/carrinhos")
