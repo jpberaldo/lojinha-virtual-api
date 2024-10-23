@@ -173,12 +173,12 @@ public class CarrinhoTest {
         List<Map<String, Object>> produtos = new ArrayList<>();
         Map<String, Object> produto = new HashMap<>();
         produto.put("idProduto", Service.gerarProdutoId(8));
-        produto.put("quantidade", 5);
+        produto.put("quantidade", 1);
         produtos.add(produto);
 
         Map<String, Object> produto2 = new HashMap<>();
         produto2.put("idProduto", Service.gerarProdutoId(3));
-        produto2.put("quantidade", 79);
+        produto2.put("quantidade", 1);
         produtos.add(produto2);
 
         Map<String, Object> body = new HashMap<>();
