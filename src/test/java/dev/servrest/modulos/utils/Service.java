@@ -1,6 +1,7 @@
 package dev.servrest.modulos.utils;
 
 import dev.servrest.modulos.data.FactoryData;
+import dev.servrest.modulos.pojo.CadastroPojo;
 import dev.servrest.modulos.pojo.CarrinhoPojo;
 import dev.servrest.modulos.pojo.ProdutoPojo;
 import dev.servrest.modulos.pojo.UsuarioPojo;

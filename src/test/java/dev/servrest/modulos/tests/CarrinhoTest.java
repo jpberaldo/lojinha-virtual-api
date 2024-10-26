@@ -1,6 +1,6 @@
 package dev.servrest.modulos.tests;
 
-import dev.servrest.modulos.pojo.UsuarioPojo;
+import dev.servrest.modulos.pojo.CadastroPojo;
 import dev.servrest.modulos.utils.Service;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
@@ -91,11 +91,16 @@ public class CarrinhoTest {
 
         Map<String, Object> body = new HashMap<>();
         body.put("produtos", produtos);
-
         System.out.println(body);
+
+        Map<String, String> dadosUsuario = CadastroPojo.cadastroNovoUsuario();
+        String email = dadosUsuario.get("email");
+        String senha = dadosUsuario.get("senha");
+
+
         this.response = given()
                 .contentType(ContentType.JSON)
-                .header("authorization", Service.gerarTokenUsuario(Service.selecionarEmailDoUltimoUsuarioCadastrado(), Service.selecionarSenhaDoUltimoUsuarioCadastrado()))
+                .header("authorization", Service.gerarTokenUsuario(email, senha))
                 .body(body)
                 .when()
                 .post("/carrinhos")
