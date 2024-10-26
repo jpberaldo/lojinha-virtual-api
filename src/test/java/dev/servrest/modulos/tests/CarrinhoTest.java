@@ -78,9 +78,10 @@ public class CarrinhoTest {
     }
 
     @Test
-    @Order(6)
+    @Order(4)
     @DisplayName("Realizar cadastro de produto no carrinho com sucesso")
     public void testRealizarCadastroDeProdutoNoCarrinhoComSucesso() {
+
 
         List<Map<String, Object>> produtos = new ArrayList<>();
         Map<String, Object> produto = new HashMap<>();
@@ -94,8 +95,7 @@ public class CarrinhoTest {
         System.out.println(body);
         this.response = given()
                 .contentType(ContentType.JSON)
-                .header("authorization", Service.gerarTokenUsuario(Service.selecionarEmailDoUltimoUsuarioCadastrado(),
-                        Service.selecionarSenhaDoUltimoUsuarioCadastrado()))
+                .header("authorization", Service.gerarTokenUsuario(Service.selecionarEmailDoUltimoUsuarioCadastrado(), Service.selecionarSenhaDoUltimoUsuarioCadastrado()))
                 .body(body)
                 .when()
                 .post("/carrinhos")
@@ -111,6 +111,60 @@ public class CarrinhoTest {
 
     @Test
     @Order(5)
+    @DisplayName("Excluir carrinho com sucesso")
+    public void testExcluirCarrinhoComSucesso() {
+
+        this.response = given()
+                .contentType(ContentType.JSON)
+                .header("authorization", Service.gerarTokenUsuario(Service.selecionarEmailDoUltimoUsuarioCadastrado(), Service.selecionarSenhaDoUltimoUsuarioCadastrado()))
+                .when()
+                .delete("/carrinhos/concluir-compra")
+                .then()
+                .assertThat()
+                .statusCode(200)
+                .body("message", equalTo("Registro excluído com sucesso"))
+                .extract().response();
+
+        System.out.println(response.asString());
+
+    }
+
+    @Test
+    @Order(6)
+    @DisplayName("Realizar cadastro de 2 produtos ou mais no carrinho com sucesso")
+    public void testRealizarCadastroDeDoisProdutosOuMaisNoCarrinhoComSucesso() {
+
+        List<Map<String, Object>> produtos = new ArrayList<>();
+        Map<String, Object> produto = new HashMap<>();
+        produto.put("idProduto", Service.gerarProdutoId(8));
+        produto.put("quantidade", 1);
+        produtos.add(produto);
+
+        Map<String, Object> produto2 = new HashMap<>();
+        produto2.put("idProduto", Service.gerarProdutoId(3));
+        produto2.put("quantidade", 1);
+        produtos.add(produto2);
+
+        Map<String, Object> body = new HashMap<>();
+        body.put("produtos", produtos);
+
+        this.response = given()
+                .contentType(ContentType.JSON)
+                .header("authorization", Service.gerarTokenUsuario(Service.selecionarEmailDoUltimoUsuarioCadastrado(), Service.selecionarSenhaDoUltimoUsuarioCadastrado()))
+                .body(body)
+                .when()
+                .post("/carrinhos")
+                .then()
+                .assertThat()
+                .body("message", equalTo("Cadastro realizado com sucesso"))
+                .statusCode(201)
+                .extract().response();
+        System.out.println(response.asString());
+
+    }
+
+    @Test
+    @Order(7)
     @DisplayName("Realizar teste que não permite incluir produto no carrinho sem informar o id do produto")
     public void testNaoPermiteCadastroSemInformarIdDoProduto() {
 
@@ -137,7 +191,7 @@ public class CarrinhoTest {
     }
 
     @Test
-    @Order(11)
+    @Order(8)
     @DisplayName("Não permitir cadastrar 2 carrinhos para 1 cliente")
     public void testNaoPermitirCadastrarDoisCarrinhosParaCliente() {
 
@@ -166,41 +220,7 @@ public class CarrinhoTest {
     }
 
     @Test
-    @Order(7)
-    @DisplayName("Realizar cadastro de 2 produtos ou mais no carrinho com sucesso")
-    public void testRealizarCadastroDeDoisProdutosOuMaisNoCarrinhoComSucesso() {
-
-        List<Map<String, Object>> produtos = new ArrayList<>();
-        Map<String, Object> produto = new HashMap<>();
-        produto.put("idProduto", Service.gerarProdutoId(8));
-        produto.put("quantidade", 1);
-        produtos.add(produto);
-
-        Map<String, Object> produto2 = new HashMap<>();
-        produto2.put("idProduto", Service.gerarProdutoId(3));
-        produto2.put("quantidade", 1);
-        produtos.add(produto2);
-
-        Map<String, Object> body = new HashMap<>();
-        body.put("produtos", produtos);
-
-        this.response = given()
-                .contentType(ContentType.JSON)
-                .header("authorization", Service.gerarTokenUsuario("teste@emailtestes.com", "teste"))
-                .body(body)
-                .when()
-                .post("/carrinhos")
-                .then()
-                .assertThat()
-                .body("message", equalTo("Cadastro realizado com sucesso"))
-                .statusCode(201)
-                .extract().response();
-        System.out.println(response.asString());
-
-    }
-
-    @Test
-    @Order(8)
+    @Order(9)
     @DisplayName("Validar mensagem de quando produto nao é encontrado")
     public void testNaoValidarMsgDeProdutoNaoEncontrado() {
 
@@ -227,7 +247,7 @@ public class CarrinhoTest {
     }
 
     @Test
-    @Order(9)
+    @Order(10)
     @DisplayName("Buscar carrinho com id válido")
     public void testBuscarCarrinhoComIdValido() {
 
@@ -246,7 +266,7 @@ public class CarrinhoTest {
     }
 
     @Test
-    @Order(10)
+    @Order(11)
     @DisplayName("Buscar carrinho com id inválido")
     public void testBuscarCarrinhoComIdInvalido() {
 
@@ -259,26 +279,6 @@ public class CarrinhoTest {
                 .assertThat()
                 .statusCode(400)
                 .body("message", equalTo("Carrinho não encontrado"))
-                .extract().response();
-
-        System.out.println(response.asString());
-
-    }
-
-    @Test
-    @Order(4)
-    @DisplayName("Excluir carrinho com sucesso")
-    public void testExcluirCarrinhoComSucesso() {
-
-        this.response = given()
-                .contentType(ContentType.JSON)
-                .header("authorization", UsuarioPojo.gerarDadosDeTokenDoUsuario(Service.selecionarEmailDoUltimoUsuarioCadastrado(), Service.selecionarSenhaDoUltimoUsuarioCadastrado()))
-                .when()
-                .delete("/carrinhos/concluir-compra")
-                .then()
-                .assertThat()
-                .statusCode(200)
-                .body("message", equalTo("Registro excluído com sucesso"))
                 .extract().response();
 
         System.out.println(response.asString());

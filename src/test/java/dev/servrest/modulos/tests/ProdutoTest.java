@@ -67,6 +67,25 @@ public class ProdutoTest {
 
     @Test
     @Order(3)
+    @DisplayName("Excluir um produto valido")
+    public void testExcluirUmProdutoValido() {
+
+        given()
+                .pathParam("_id", Service.selecionarUltimoProduto())
+                .contentType(ContentType.JSON)
+                .header("authorization", Service.gerarTokenUsuario("fulano@qa.com", "teste"))
+                .when()
+                .delete("/produtos/{_id}")
+                .then()
+                .assertThat()
+                .body("message", equalTo("Registro excluído com sucesso"))
+                .statusCode(HttpStatus.SC_OK)
+                .log().all();
+
+    }
+
+    @Test
+    @Order(4)
     @DisplayName("Não permite cadastrar produto ja registrado no sistema")
     public void testNaoPermiteCadastrarProdutoJaRegistrado() {
 
@@ -98,7 +117,7 @@ public class ProdutoTest {
     }
 
     @Test
-    @Order(4)
+    @Order(5)
     @DisplayName("Não permite cadastrar produto sem enviar o parametro do token corretamente na requisição")
     public void testNaoPermiteCadastrarProdutoSemOParametroTokenCorreto() {
 
@@ -134,7 +153,7 @@ public class ProdutoTest {
     }
 
     @Test
-    @Order(5)
+    @Order(6)
     @DisplayName("Não permite cadastrar produto com token inválido")
     public void testNaoPermiteCadastrarProdutoComTokenInvalido() {
 
@@ -167,7 +186,7 @@ public class ProdutoTest {
     }
 
     @Test
-    @Order(6)
+    @Order(7)
     @DisplayName("Não permite cadastrar produto com usuário administrador = false")
     public void testNaoPermiteCadastrarProdutoComADMIgualFalse() {
 
@@ -189,7 +208,7 @@ public class ProdutoTest {
     }
 
     @Test
-    @Order(7)
+    @Order(8)
     @DisplayName("Não permitir cadastrar produto com usuário inválido")
     public void testNaoPermiteCadastrarProdutoComUsuarioInvalido() {
 
@@ -209,24 +228,7 @@ public class ProdutoTest {
 
     }
 
-    @Test
-    @Order(8)
-    @DisplayName("Excluir um produto valido")
-    public void testExcluirUmProdutoValido() {
 
-        given()
-                .pathParam("_id", Service.selecionarUltimoProduto())
-                .contentType(ContentType.JSON)
-                .header("authorization", Service.gerarTokenUsuario("fulano@qa.com", "teste"))
-                .when()
-                .delete("/produtos/{_id}")
-                .then()
-                .assertThat()
-                .body("message", equalTo("Registro excluído com sucesso"))
-                .statusCode(HttpStatus.SC_OK)
-                .log().all();
-
-    }
 
     @Test
     @Order(9)
