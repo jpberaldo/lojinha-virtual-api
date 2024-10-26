@@ -76,17 +76,20 @@ public class CadastroTest {
 //
 //        String idUsuario = usuariosResponse.jsonPath().getString("usuarios[4]._id");
 
-        response = given()
-                .pathParam("_id", Service.selecionarUltimoUsuario())
+        String id = Service.cadastrarNovoUsuario().jsonPath().getString("_id");
+        System.out.println("Qual é o id? " + id);
+
+        Response teste = given()
+                .pathParam("_id", id)
                 .when()
                 .delete("/usuarios/{_id}")
                 .then()
                 .assertThat()
-                .statusCode(200)
                 .body("message", equalTo("Registro excluído com sucesso"))
+                .statusCode(200)
                 .extract().response();
 
-        System.out.println(response.asString());
+        System.out.println(teste.asString());
 
     }
 

@@ -1,13 +1,16 @@
 package dev.servrest.modulos.utils;
 
+import dev.servrest.modulos.data.CadastroData;
 import dev.servrest.modulos.data.FactoryData;
-import dev.servrest.modulos.pojo.CadastroPojo;
 import dev.servrest.modulos.pojo.CarrinhoPojo;
 import dev.servrest.modulos.pojo.ProdutoPojo;
 import dev.servrest.modulos.pojo.UsuarioPojo;
+import io.restassured.http.ContentType;
+import io.restassured.response.Response;
+import io.restassured.response.ValidatableResponse;
 
-import static io.restassured.RestAssured.baseURI;
-import static io.restassured.RestAssured.port;
+import static dev.servrest.modulos.data.FactoryData.*;
+import static io.restassured.RestAssured.*;
 
 public class Service {
 
@@ -22,7 +25,7 @@ public class Service {
         return ProdutoPojo.gerarProdutoId(produto);
     }
 
-    public static String selecionarUltimoProduto(){
+    public static String selecionarUltimoProduto() {
         return ProdutoPojo.gerarDadosParaSelecionarUltimoProduto();
     }
 
@@ -35,7 +38,7 @@ public class Service {
     }
 
     public static String selecionarUltimoUsuario() {
-       return UsuarioPojo.fazerSelecaoDoUltimoUsuario();
+        return UsuarioPojo.fazerSelecaoDoUltimoUsuario();
     }
 
     public static String gerarTokenUsuario(String email, String senha) {
@@ -58,12 +61,24 @@ public class Service {
         return FactoryData.VALOR;
     }
 
-    public static String selecionarEmailDoUltimoUsuarioCadastrado(){
+    public static String selecionarEmailDoUltimoUsuarioCadastrado() {
         return UsuarioPojo.pegarEmailDoUltimoUsuarioCadastrado();
     }
 
-    public static String selecionarSenhaDoUltimoUsuarioCadastrado(){
+    public static String selecionarSenhaDoUltimoUsuarioCadastrado() {
         return UsuarioPojo.pegarSenhaDoUltimoUsuarioCadastrado();
     }
+
+    public static Response cadastrarNovoUsuario() {
+        Response response = given()
+                .contentType(ContentType.JSON)
+                .body(CadastroData.informarDadosDeCadastro(NOME_RANDOMICO, EMAIL_RANDOMICO, SENHA_RANDOMICA, "true"))
+                .when()
+                .post("/usuarios");
+
+        return response;
+    }
+
+    ;
 
 }
