@@ -7,7 +7,6 @@ import dev.servrest.modulos.pojo.ProdutoPojo;
 import dev.servrest.modulos.pojo.UsuarioPojo;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
-import io.restassured.response.ValidatableResponse;
 
 import static dev.servrest.modulos.data.FactoryData.*;
 import static io.restassured.RestAssured.*;
@@ -78,7 +77,5 @@ public class Service {
 
         return response;
     }
-
-    ;
 
 }
