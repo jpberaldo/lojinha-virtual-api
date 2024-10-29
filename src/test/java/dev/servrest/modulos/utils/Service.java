@@ -73,7 +73,10 @@ public class Service {
                 .contentType(ContentType.JSON)
                 .body(CadastroData.informarDadosDeCadastro(NOME_RANDOMICO, EMAIL_RANDOMICO, SENHA_RANDOMICA, "true"))
                 .when()
-                .post("/usuarios");
+                .post("/usuarios")
+                .then()
+                .extract()
+                .response();
 
         return response;
     }
