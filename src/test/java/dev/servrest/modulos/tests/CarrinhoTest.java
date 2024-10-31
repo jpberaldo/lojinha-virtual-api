@@ -139,6 +139,7 @@ public class CarrinhoTest {
     @DisplayName("Realizar cadastro de 2 produtos ou mais no carrinho com sucesso")
     public void testRealizarCadastroDeDoisProdutosOuMaisNoCarrinhoComSucesso() {
 
+        Service.cadastrarNovoUsuario();
         List<Map<String, Object>> produtos = new ArrayList<>();
         Map<String, Object> produto = new HashMap<>();
         produto.put("idProduto", Service.selecionarUltimoProduto());
